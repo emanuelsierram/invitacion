@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda de Emanuel & Richelle</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bloquear-scroll">
+
+    <main class="mobile-app">
+
+        <div id="pantalla-sobre" class="pantalla-sobre">
+            <video id="video-sobre" playsinline preload="auto">
+                <source src="C:\Users\EMANUEL\OneDrive\Imágenes\Boda\Invitacion\invitacion.mp4.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+
+            <div id="capa-instruccion" class="capa-instruccion">
+            </div>
+        </div>
+
+        <section class="hero" id="hero">
+            <div class="flor decoracion-arriba-izq">
+                <img src="assets/2.png" alt="Decoración floral superior">
+            </div>
+            <div class="flor decoracion-arriba-der">
+                <img src="assets/2.png" alt="Decoración floral superior">
+            </div>
+
+            <div class="flor decoracion-abajo-izq">
+                <img src="assets/4.png" alt="Decoración floral inferior">
+            </div>
+            <div class="flor decoracion-abajo-der">
+                <img src="assets/4.png" alt="Decoración floral inferior">
+            </div>
+            <div class="hero-content">
+
+                <h1 class="nombres animar-fade-up delay-1">
+                    Emanuel <br>
+                    <span class="ampersand">&</span> <br>
+                    Richelle
+                </h1>
+
+                <p class="intro-text animar-fade-up delay-2">
+                    Con la bendición de Dios y la de nuestros padres, queremos celebrar uno de los momentos más
+                    importantes de nuestras vidas, rodeados del amor de nuestros familiares y amigos. Nos llenaría de
+                    alegría contar con tu presencia en este día tan especial.
+                </p>
+            </div>
+        </section>
+
+        <section class="save-the-date" id="save-the-date">
+            <h2 class="titulo-seccion animar-scroll">Save the Date</h2>
+
+            <div class="calendario-container animar-scroll" id="contenedor-calendario">
+
+                <div class="cubierta-calendario" id="cubierta-fecha">
+                    <span class="icono-tocar">👆</span>
+                    <p>Toca para ver</p>
+                </div>
+
+                <div class="calendario-hoja">
+                    <div class="calendario-mes">AGOSTO</div>
+                    <div class="calendario-dia">
+                        <span class="numero" id="flip-numero">16</span>
+                    </div>
+                    <div class="calendario-anio">2026</div>
+                </div>
+            </div>
+
+            <p class="calendario-texto animar-scroll">¡Reserva esta fecha tan especial!</p>
+
+            <button id="btn-calendario" class="btn-primario animar-scroll">
+                <span class="icono-calendario">📅</span> Añadir a mi Calendario
+            </button>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

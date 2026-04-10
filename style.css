@@ -1,0 +1,386 @@
+:root {
+    --verde-oliva: #6B8246; 
+    --verde-claro: #A3B18A;
+    --blanco: #FFFFFF;
+    --texto-oscuro: #4A4A4A;
+    --fondo-app: #FAFAFA;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #e0e0e0; 
+    display: flex;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif; 
+}
+
+body.bloquear-scroll {
+    overflow: hidden;
+}
+
+.mobile-app {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--fondo-app);
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --- EL SOBRE INTERACTIVO --- */
+.pantalla-sobre {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--verde-oliva);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* La transición ahora la maneja la animación de los @keyframes */
+}
+/* --- EFECTO FLASH CINEMATOGRÁFICO --- */
+/* --- EFECTO FLASH DORADO SUAVE (ACTUALIZADO) --- */
+.flash-activo {
+    /* Aumentamos un poco la duración total para que sea más lento y elegante */
+    animation: efectoFlashDorado 1.8s ease-in-out forwards;
+    pointer-events: none; /* Evita clics extra */
+}
+
+@keyframes efectoFlashDorado {
+    0% { 
+        filter: brightness(1) contrast(1); 
+        opacity: 1; 
+        background-color: transparent;
+    }
+    /* PASO 1: Llegada suave al tono amarillo/dorado (Luz cálida) */
+    45% { 
+        /* Aquí creamos el tinte dorado suave */
+        background-color: #E2C799; /* Un oro suave y elegante */
+        filter: brightness(1.8) contrast(1.2); /* Brillo moderado */
+        opacity: 1; 
+    }
+    /* PASO 2: Clímax de luz blanca (Revelación profunda) */
+    70% { 
+        background-color: white; 
+        filter: brightness(5) contrast(1.5); /* Mucho más brillo, pero progresivo */
+        opacity: 1; 
+    }
+    /* PASO 3: Desvanecimiento final revelando los nombres */
+    100% { 
+        filter: brightness(1); 
+        opacity: 0; 
+        visibility: hidden; 
+    }
+}
+
+#video-sobre {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video llene la pantalla sin distorsionarse */
+    z-index: 1;
+}
+
+.capa-instruccion {
+    position: absolute;
+    z-index: 2;
+    background-color: rgba(226, 15, 15, 0);
+    padding: 12px 24px;
+    border-radius: 30px;
+    /* Animación de latido para llamar la atención */
+    animation: latidoSuave 2s infinite;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 40px;
+}
+
+@keyframes latidoSuave {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* --- HERO CON IMAGEN DE FONDO --- */
+.hero {
+    /* Quitamos el 100vh y dejamos que la altura sea automática según el contenido */
+    min-height: auto; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+
+    padding: 140px 30px 100px;    
+    position: relative;
+    overflow: hidden;
+
+    /* --- REFERENCIA A TU ASSET LOCAL --- */
+    background-image: 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.95) 100%), 
+        url('assets/1.jpg'); 
+    
+    background-size: cover; 
+    background-position: top; 
+    background-repeat: no-repeat;
+}
+
+.flor {
+    position: absolute;
+    z-index: 0; /* Quedan detrás del texto (.hero-content tiene z-index: 1) */
+    pointer-events: none; /* No interfieren con los toques en la pantalla */
+    opacity: 0.9; /* Ligeramente transparentes para integrarse mejor */
+}
+
+.flor img {
+    display: block;
+    max-width: 100%; /* Se adaptan al contenedor */
+    height: auto;
+}
+
+/* --- POSICIONAMIENTO ESPECÍFICO --- */
+
+/* Flores Superiores */
+.decoracion-arriba-izq {
+    top: -10px; /* Un poco salidas hacia arriba */
+    left: -20px; /* Un poco salidas hacia la izquierda */
+    width: 45%; /* Ocupan casi la mitad del ancho en móvil */
+}
+
+.decoracion-arriba-der {
+    top: -10px;
+    right: -20px;
+    width: 45%;
+    /* Reflejamos la imagen horizontalmente para la derecha */
+    transform: scaleX(-1); 
+}
+
+/* Flores Inferiores */
+.decoracion-abajo-izq {
+    bottom: -20px; /* Un poco salidas hacia abajo */
+    left: -20px;
+    width: 40%;
+}
+
+.decoracion-abajo-der {
+    bottom: -20px;
+    right: -20px;
+    width: 40%;
+    /* Reflejamos la imagen horizontalmente para la derecha */
+    transform: scaleX(-1); 
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.intro-text {
+    color: var(--texto-oscuro);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    font-weight: 400; /* Un poco más de peso para mejorar lectura */
+}
+
+.nombres {
+    font-family: 'Great Vibes', cursive;
+    color: var(--verde-oliva);
+    font-size: 4.2rem; /* Un poco más grande */
+    line-height: 0.9;
+    font-weight: normal;
+    margin-bottom: 30px;
+    /* Un ligero sombreado blanco sutil para despegarlo aún más del fondo */
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.8); 
+}
+
+.ampersand {
+    font-size: 2.5rem;
+    color: var(--verde-claro);
+}
+
+.animar-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+
+.animar-fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.2s; }
+.delay-2 { transition-delay: 0.8s; }
+
+/* --- SECCIÓN SAVE THE DATE --- */
+.save-the-date {
+    padding: 80px 20px;
+    background-color: var(--fondo-app);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo-seccion {
+    font-family: 'Great Vibes', cursive;
+    color: var(--verde-oliva);
+    font-size: 3.5rem;
+    margin-bottom: 40px;
+    font-weight: normal;
+}
+
+/* Diseño de la hoja del calendario */
+.calendario-container {
+    perspective: 1000px; 
+    margin-bottom: 25px;
+    position: relative; /* ¡CRÍTICO! Para que la cubierta se quede dentro */
+}
+
+.cubierta-calendario {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Degradado elegante con tus colores base */
+    background: linear-gradient(135deg, var(--verde-oliva), var(--verde-claro));
+    border-radius: 12px;
+    z-index: 10; /* Se asegura de estar encima del calendario */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--blanco);
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(107, 130, 70, 0.4);
+    
+    /* Animación de apertura estilo "puerta de garaje" o tarjeta */
+    transform-origin: top center; 
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease;
+}
+
+/* La clase que aplicaremos con JS para abrir la cubierta */
+.cubierta-calendario.destapado {
+    transform: rotateX(90deg); /* Se pliega hacia atrás */
+    opacity: 0;
+    pointer-events: none; /* Para que ya no estorbe los clics */
+}
+
+.icono-tocar {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    animation: manitoFlotando 1.5s infinite ease-in-out;
+}
+
+.cubierta-calendario p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@keyframes manitoFlotando {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.calendario-hoja {
+    width: 140px;
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid #eaeaea;
+    transform-style: preserve-3d;
+}
+
+.calendario-mes {
+    background-color: var(--verde-oliva);
+    color: var(--blanco);
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 12px 0;
+    letter-spacing: 2px;
+}
+
+.calendario-dia {
+    font-size: 4.5rem;
+    font-weight: 600;
+    color: var(--texto-oscuro);
+    padding: 15px 0;
+    /* Un ligero degradado para simular el pliegue del papel */
+    background: linear-gradient(to bottom, #ffffff 50%, #f9f9f9 50%);
+    border-bottom: 1px dashed #ccc;
+}
+
+/* La clase que hará rotar el número */
+.flip-animacion {
+    display: inline-block;
+    animation: flipIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes flipIn {
+    0% { transform: rotateX(-90deg); opacity: 0; }
+    100% { transform: rotateX(0deg); opacity: 1; }
+}
+
+.calendario-anio {
+    font-size: 1.2rem;
+    color: var(--verde-claro);
+    padding: 12px 0;
+    font-weight: 600;
+}
+
+.calendario-texto {
+    font-size: 1rem;
+    color: var(--texto-oscuro);
+    margin-bottom: 35px;
+}
+
+/* Diseño del botón primario */
+.btn-primario {
+    background-color: var(--verde-oliva);
+    color: var(--blanco);
+    border: none;
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(107, 130, 70, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-primario:active {
+    transform: scale(0.95); /* Se hunde ligeramente al tocarlo */
+    background-color: #556837;
+}
+
+/* Clases para animación al hacer scroll */
+.animar-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.animar-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
