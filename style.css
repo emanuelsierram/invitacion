@@ -3,7 +3,7 @@
     --verde-claro: #A3B18A;
     --blanco: #FFFFFF;
     --texto-oscuro: #4A4A4A;
-    --fondo-app: #FAFAFA;
+    --fondo-app: #e7e7e7;
 }
 
 * {
@@ -158,12 +158,12 @@ body.bloquear-scroll {
 /* Nombres con contraste */
 .nombres {
     font-family: 'Great Vibes', cursive;
-    color: #4A5D33; /* Verde oliva oscuro para máximo contraste */
+    color: var(--verde-oliva);
     font-size: 4.5rem; 
     line-height: 0.9;
     font-weight: normal;
-    margin-bottom: 25px;
     margin-bottom: 45px; /* Aumenta este margen para empujar el texto más hacia abajo */
+    text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.9);
 }
 
 .intro-text {
