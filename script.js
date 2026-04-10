@@ -106,6 +106,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- 1. LÓGICA DEL NOMBRE PERSONALIZADO ---
+    const params = new URLSearchParams(window.location.search);
+    const nombreInvitado = params.get('invitado');
     
+    // Buscamos el elemento que acabamos de crear en el HTML
+    const elementoNombreFinal = document.getElementById('nombre-invitado-final');
+
+    // Si encontramos el elemento y hay un nombre en la URL, lo inyectamos
+    if (elementoNombreFinal && nombreInvitado) {
+        // Usamos decodeURIComponent por si el nombre tiene espacios o tildes
+        elementoNombreFinal.textContent = decodeURIComponent(nombreInvitado);
+    }
 
 });

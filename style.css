@@ -112,27 +112,67 @@ body.bloquear-scroll {
 }
 
 /* --- HERO CON IMAGEN DE FONDO --- */
+/* --- HERO CON IMAGEN DE FONDO COMPLETA Y CONTRASTE --- */
 .hero {
-    /* Quitamos el 100vh y dejamos que la altura sea automática según el contenido */
-    min-height: auto; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    /* Mantenemos un alto que permita ver bien la foto (puedes subirlo a 85vh o 90vh si sientes que falta espacio) */
+    min-height: 20vh; 
+    height: 50vh; 
     
-
-    padding: 140px 30px 100px;    
-    position: relative;
-    overflow: hidden;
-
-    /* --- REFERENCIA A TU ASSET LOCAL --- */
+    /* 1. ZONA BLANCA MÁS GRANDE: 
+       El blanco puro (1) ahora empieza al 65% de la pantalla, dando mucho más espacio al texto */
     background-image: 
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.95) 100%), 
-        url('assets/1.jpg'); 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.75) 45%, rgba(255, 255, 255, 1) 65%), 
+        url('assets/1.1.jpg'); 
     
     background-size: cover; 
-    background-position: top; 
+    
+    /* 2. SUBIR LA IMAGEN:
+       'center bottom' pega la base de tu foto al fondo del contenedor, revelando a la pareja.
+       (Si sientes que sube demasiado, cámbialo a 'center 80%') */
+    background-position: center; 
+    
     background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    text-align: center;
+    
+    /* 3. BAJAR EL TEXTO:
+       Reducimos el padding inferior (el último número) a 20px para que el texto baje a la zona blanca */
+    padding: 120px 20px 10px; 
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1; 
+    /* Margen superior para despegar los nombres de la parte más alta de la foto */
+    margin-top: 40px; 
+}
+
+/* Nombres con contraste */
+.nombres {
+    font-family: 'Great Vibes', cursive;
+    color: #4A5D33; /* Verde oliva oscuro para máximo contraste */
+    font-size: 4.5rem; 
+    line-height: 0.9;
+    font-weight: normal;
+    margin-bottom: 25px;
+    margin-bottom: 45px; /* Aumenta este margen para empujar el texto más hacia abajo */
+}
+
+.intro-text {
+    color: var(--texto-oscuro);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    font-weight: 500; /* Un poco más de grosor para leerse mejor */
+    width: 90%;
 }
 
 .flor {
@@ -180,33 +220,10 @@ body.bloquear-scroll {
     transform: scaleX(-1); 
 }
 
-.hero-content {
-    position: relative;
-    z-index: 1;
-}
-
-.intro-text {
-    color: var(--texto-oscuro);
-    font-size: 0.95rem;
-    line-height: 1.8;
-    margin-bottom: 40px;
-    font-weight: 400; /* Un poco más de peso para mejorar lectura */
-}
-
-.nombres {
-    font-family: 'Great Vibes', cursive;
-    color: var(--verde-oliva);
-    font-size: 4.2rem; /* Un poco más grande */
-    line-height: 0.9;
-    font-weight: normal;
-    margin-bottom: 30px;
-    /* Un ligero sombreado blanco sutil para despegarlo aún más del fondo */
-    text-shadow: 2px 2px 4px rgba(255,255,255,0.8); 
-}
 
 .ampersand {
+    color: #4A5D33;
     font-size: 2.5rem;
-    color: var(--verde-claro);
 }
 
 .animar-fade-up {
@@ -383,4 +400,51 @@ body.bloquear-scroll {
 .animar-scroll.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+#saludo-invitado {
+    color: var(--verde-oliva);
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* --- CONTENEDOR DE LA FOTO PAREJA (Con degradado inferior) --- */
+.foto-pareja-container {
+    width: 90%; /* Contenida en ancho móvil */
+    max-width: 400px; /* Máximo ancho en pantallas más grandes */
+    position: relative;
+    margin-bottom: 30px; /* Espacio para el texto de abajo */
+    border-radius: 12px;
+    overflow: hidden; /* Corta la imagen */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.foto-pareja-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Efecto degradado suave en la parte inferior para fundir con el blanco */
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+.ampersand {
+    font-size: 2.5rem;
+    color: var(--verde-claro);
+}
+
+
+/* Contenedor pases (integración) */
+.contenedor-pases p {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+    color: var(--verde-oliva);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.numero-pases {
+    font-size: 1.3rem;
+    font-weight: bold;
 }
