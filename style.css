@@ -3,7 +3,7 @@
     --verde-claro: #A3B18A;
     --blanco: #FFFFFF;
     --texto-oscuro: #4A4A4A;
-    --fondo-app: #e7e7e7;
+    --fondo-app: #FAFAFA;
 }
 
 * {
@@ -162,7 +162,7 @@ body.bloquear-scroll {
     font-size: 4.5rem; 
     line-height: 0.9;
     font-weight: normal;
-    margin-bottom: 45px; /* Aumenta este margen para empujar el texto más hacia abajo */
+    margin-bottom: 20px;
     text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.9);
 }
 
@@ -170,7 +170,6 @@ body.bloquear-scroll {
     color: var(--texto-oscuro);
     font-size: 0.95rem;
     line-height: 1.7;
-    margin-bottom: 30px;
     font-weight: 500; /* Un poco más de grosor para leerse mejor */
     width: 90%;
 }
@@ -220,12 +219,6 @@ body.bloquear-scroll {
     transform: scaleX(-1); 
 }
 
-
-.ampersand {
-    color: #4A5D33;
-    font-size: 2.5rem;
-}
-
 .animar-fade-up {
     opacity: 0;
     transform: translateY(30px);
@@ -242,12 +235,13 @@ body.bloquear-scroll {
 
 /* --- SECCIÓN SAVE THE DATE --- */
 .save-the-date {
-    padding: 80px 20px;
+    padding: 50px 20px;
     background-color: var(--fondo-app);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 20px;
 }
 
 .titulo-seccion {
@@ -447,4 +441,77 @@ body.bloquear-scroll {
 .numero-pases {
     font-size: 1.3rem;
     font-weight: bold;
+}
+
+/* --- SECCIÓN CRONÓMETRO --- */
+.cronometro-section {
+    padding: 60px 20px 100px; /* Aumentamos padding para dar aire a la imagen */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    /* --- LA MAGIA DEL FONDO CON DIFUMINADO BLANCO --- */
+    /* Capa 1 (Filtro): Degradado blanco muy suave (90% opacidad) para asegurar contraste */
+    /* Capa 2 (Imagen): Tu textura o foto decorativa */
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.432), rgba(255, 255, 255, 0.486)), 
+        url('assets/2.jpg'); /* <-- CAMBIA ESTA URL POR TU ASSET LOCAL 'assets/fondo-cronometro.jpg' */
+    
+    background-size: cover; /* Cubre toda la sección */
+    background-position: center; /* Centra la textura */
+    background-repeat: no-repeat;
+}
+
+.titulo-cronometro,
+.cronometro-container {
+    position: relative;
+    z-index: 1;
+}
+
+.titulo-cronometro {
+    font-family: 'Great Vibes', cursive;
+    color: var(--verde-oliva);
+    font-size: 3rem;
+    margin-bottom: 30px;
+    font-weight: normal;
+}
+
+.cronometro-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px; /* Separación entre círculos */
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* El diseño de los círculos */
+.tiempo-caja {
+    background-color: var(--fondo-app);
+    border: 1px solid var(--verde-claro);
+    border-radius: 50%; /* Los hace completamente redondos */
+    width: 75px;
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03); /* Sombra muy sutil */
+}
+
+.tiempo-numero {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--texto-oscuro);
+    line-height: 1;
+}
+
+.tiempo-etiqueta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    color: var(--verde-oliva);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+    font-weight: 600;
 }

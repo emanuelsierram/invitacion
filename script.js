@@ -1,3 +1,10 @@
+
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
+// Forzamos la vista al tope exacto de la página
+window.scrollTo(0, 0);
+
 document.addEventListener("DOMContentLoaded", () => {
     
    const pantallaSobre = document.getElementById('pantalla-sobre');
@@ -118,5 +125,48 @@ document.addEventListener("DOMContentLoaded", () => {
         // Usamos decodeURIComponent por si el nombre tiene espacios o tildes
         elementoNombreFinal.textContent = decodeURIComponent(nombreInvitado);
     }
+
+    // --- LÓGICA DEL CRONÓMETRO DE DÍAS FALTANTES ---
+    
+    // Configuramos la fecha exacta: 16 de Agosto de 2026 a las 15:00:00 (3:00 PM)
+    const fechaBoda = new Date("Aug 16, 2026 15:00:00").getTime();
+
+    // Función que se ejecuta cada 1 segundo (1000ms)
+    const intervaloCronometro = setInterval(() => {
+        
+        // Obtenemos la fecha y hora de este mismo instante
+        const ahora = new Date().getTime();
+        
+        // Encontramos la distancia entre ahora y la fecha de la boda
+        const distancia = fechaBoda - ahora;
+
+        // Cálculos matemáticos para extraer días, horas, minutos y segundos
+        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+        // Ubicamos los elementos en el HTML
+        const elDias = document.getElementById("dias");
+        
+        // Si el elemento existe, inyectamos los números.
+        // El operador (dias < 10 ? "0" + dias : dias) es para que los números del 0 al 9 tengan un "0" delante (ej: 09, 08)
+        if (elDias) {
+            elDias.textContent = dias; // Los días pueden ser más de 99, así que no le ponemos cero inicial
+            document.getElementById("horas").textContent = horas < 10 ? "0" + horas : horas;
+            document.getElementById("minutos").textContent = minutos < 10 ? "0" + minutos : minutos;
+            document.getElementById("segundos").textContent = segundos < 10 ? "0" + segundos : segundos;
+        }
+
+        // ¿Qué pasa si el cronómetro llega a cero? 
+        if (distancia < 0) {
+            clearInterval(intervaloCronometro); // Detenemos el reloj
+            const contenedorCrono = document.querySelector(".cronometro-container");
+            if (contenedorCrono) {
+                // Cambiamos los círculos por un mensaje de celebración
+                contenedorCrono.innerHTML = "<div style='font-size: 1.2rem; color: var(--verde-oliva); font-weight: 600;'>¡El gran día ha llegado! 🎉</div>";
+            }
+        }
+    }, 1000);
 
 });
