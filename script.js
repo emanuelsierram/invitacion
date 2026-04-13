@@ -169,4 +169,89 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 1000);
 
+// --- LÓGICA DEL CARRUSEL DE FOTOS (Bucle Infinito y 10s) ---
+    const track = document.getElementById('carousel-track');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const dots = document.querySelectorAll('.dot');
+    const slidesOriginales = document.querySelectorAll('.carousel-slide');
+
+    if (track && btnPrev && btnNext && slidesOriginales.length > 0) {
+        const totalOriginal = dots.length;
+
+        // 1. Clonar la primera y última foto para crear la ilusión del bucle infinito
+        const primerSlideClon = slidesOriginales[0].cloneNode(true);
+        const ultimoSlideClon = slidesOriginales[totalOriginal - 1].cloneNode(true);
+
+        // 2. Añadimos el clon del último al principio, y el clon del primero al final
+        track.insertBefore(ultimoSlideClon, slidesOriginales[0]);
+        track.appendChild(primerSlideClon);
+
+        // Como añadimos una foto al principio, nuestro índice real empieza en 1
+        let indexReal = 1;
+        
+        // Ajustamos la pista para que muestre la foto original 1 sin animación al cargar
+        track.style.transition = "none";
+        track.style.transform = `translateX(-100%)`;
+
+        let enTransicion = false;
+
+        // Función para iluminar el puntito correcto
+        function actualizarPuntitos() {
+            let indexDot = indexReal - 1;
+            // Corregir los índices si estamos parados sobre los clones invisibles
+            if (indexReal === totalOriginal + 1) indexDot = 0; 
+            if (indexReal === 0) indexDot = totalOriginal - 1; 
+
+            dots.forEach(dot => dot.classList.remove('activo'));
+            if(dots[indexDot]) dots[indexDot].classList.add('activo');
+        }
+
+        // Función principal para mover el carrusel
+        function moverA(index) {
+            if (enTransicion) return; // Evita que se vuelva loco si el usuario hace muchos clics rápidos
+            enTransicion = true;
+            
+            track.style.transition = "transform 0.6s ease-in-out"; // Animación suave
+            track.style.transform = `translateX(-${index * 100}%)`;
+            indexReal = index;
+            actualizarPuntitos();
+        }
+
+        // 3. El truco de magia: El "salto invisible" cuando termina la animación
+        track.addEventListener('transitionend', () => {
+            enTransicion = false;
+            
+            // Si pasamos la última foto y llegamos al clon de la primera...
+            if (indexReal === totalOriginal + 1) {
+                track.style.transition = "none"; // Apagamos la animación
+                indexReal = 1; // Saltamos mágicamente a la foto 1 real
+                track.style.transform = `translateX(-${indexReal * 100}%)`;
+            }
+            
+            // Si retrocedemos desde la primera y llegamos al clon de la última...
+            if (indexReal === 0) {
+                track.style.transition = "none";
+                indexReal = totalOriginal; // Saltamos a la última foto real
+                track.style.transform = `translateX(-${indexReal * 100}%)`;
+            }
+        });
+
+        // Eventos de los botones
+        btnNext.addEventListener('click', () => { moverA(indexReal + 1); });
+        btnPrev.addEventListener('click', () => { moverA(indexReal - 1); });
+
+        // Eventos para que los puntitos también sean clickeables
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                moverA(i + 1);
+            });
+        });
+
+        // 4. Automatización de 10 segundos (10000 milisegundos)
+        setInterval(() => {
+            moverA(indexReal + 1);
+        }, 10000); // <-- Aquí están los 10 segundos
+    }
+
 });

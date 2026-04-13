@@ -1,6 +1,8 @@
+/* --- ACTUALIZACIÓN DE PALETA GLOBAL (BASADA EN IMAGEN) --- */
 :root {
-    --verde-oliva: #6B8246; 
-    --verde-claro: #A3B18A;
+    --verde-oliva: #778c43; /* Hexágono actualizado del verde oscuro de la imagen */
+    --verde-claro: #96ac60; /* Hexágono del verde claro de la imagen (mismo hex) */
+    --color-crema: #F2EBE1; /* Hexágono del crema suave de la imagen (NUEVO) */
     --blanco: #FFFFFF;
     --texto-oscuro: #4A4A4A;
     --fondo-app: #FAFAFA;
@@ -62,23 +64,17 @@ body.bloquear-scroll {
         background-color: transparent;
     }
     /* PASO 1: Llegada suave al tono amarillo/dorado (Luz cálida) */
-    45% { 
+    40%, 60% { 
         /* Aquí creamos el tinte dorado suave */
-        background-color: #E2C799; /* Un oro suave y elegante */
-        filter: brightness(1.8) contrast(1.2); /* Brillo moderado */
+        background-color: rgba(255, 255, 255, 0.9);; /* Un oro suave y elegante */
+        filter: brightness(1.5); /* Brillo moderado */
         opacity: 1; 
     }
     /* PASO 2: Clímax de luz blanca (Revelación profunda) */
-    70% { 
-        background-color: white; 
-        filter: brightness(5) contrast(1.5); /* Mucho más brillo, pero progresivo */
-        opacity: 1; 
-    }
-    /* PASO 3: Desvanecimiento final revelando los nombres */
-    100% { 
-        filter: brightness(1); 
+    100% {  
+        filter: brightness(1); /* Mucho más brillo, pero progresivo */
         opacity: 0; 
-        visibility: hidden; 
+        visibility: hidden;
     }
 }
 
@@ -139,7 +135,7 @@ body.bloquear-scroll {
     
     /* 3. BAJAR EL TEXTO:
        Reducimos el padding inferior (el último número) a 20px para que el texto baje a la zona blanca */
-    padding: 120px 20px 10px; 
+    padding: 120px 20px 30px; 
     position: relative;
     overflow: hidden;
 }
@@ -514,4 +510,390 @@ body.bloquear-scroll {
     letter-spacing: 1px;
     margin-top: 6px;
     font-weight: 600;
+}
+
+/* --- SECCIÓN UBICACIONES --- */
+.ubicaciones {
+    padding: 60px 20px;
+    background-color: var(--fondo-app);
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Espacio entre las dos tarjetas */
+}
+
+.tarjeta-ubicacion {
+    background-color: var(--blanco);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid rgba(163, 177, 138, 0.2);
+}
+
+.icono-ubicacion {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.titulo-ubicacion {
+    font-family: 'Great Vibes', cursive;
+    color: var(--verde-oliva);
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.nombre-lugar {
+    font-weight: 600;
+    color: var(--texto-oscuro);
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.detalle-hora {
+    color: var(--verde-oliva);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+/* Contenedor del mapa para redondear las esquinas del iframe */
+.mapa-contenedor {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    border: 1px solid #eee;
+}
+
+/* Botón de GPS */
+.btn-gps {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: transparent;
+    color: var(--verde-oliva);
+    border: 2px solid var(--verde-oliva);
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-gps:active {
+    background-color: var(--verde-oliva);
+    color: var(--blanco);
+}
+
+/* --- SECCIÓN DRESS CODE CON DOS CÍRCULOS (ACTUALIZADO) --- */
+/* --- ESTILO RECOMENDADO: TEXTURA DE LINO SUTIL ( style.css ) --- */
+.dress-code {
+    padding: 80px 20px 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    /* === LA MAGIA DEL FONDO (Lino con degradado blanco suave) === */
+    /* Capa 1: Filtro blanco difuminado muy sutil (80%-90% opacidad) */
+    /* Capa 2: Tu asset local de textura de lino 'assets/textura-lino.jpg' */
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.466), rgba(255, 255, 255, 0.603)), 
+        url('assets/6.png'); /* <-- Cambia esta URL por TU ASSET LOCAL */
+    
+    background-size: cover; /* Cubre toda la sección */
+    background-position: center; /* Centra la textura */
+    background-repeat: no-repeat;
+    
+    /* Quitamos el borde top que teníamos de ubicaciones */
+    border-top: none; 
+}
+
+/* El resto de estilos (iconos, texto, círculos) quedan igual que los actualizados anteriormente */
+.icono-dresscode,
+.titulo-seccion,
+.texto-dresscode,
+.colores-reservados {
+    position: relative;
+    z-index: 1; /* Asegura que el contenido flote sobre el fondo */
+}
+
+.icono-dresscode {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.texto-dresscode {
+    font-size: 1rem;
+    color: var(--texto-oscuro);
+    line-height: 1.7;
+    max-width: 320px;
+    margin: 0 auto 25px;
+}
+
+/* Contenedor de los colores prohibidos */
+.colores-reservados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.circulo-color {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Definición del nuevo círculo Crema */
+.circulo-color.crema {
+    background-color: #F2EBE1; /* Hexágono de la imagen */
+    border: 2px solid #EAEAEA;
+}
+
+.circulo-color.blanco {
+    background-color: var(--blanco);
+    border: 2px solid #EAEAEA;
+}
+
+
+.circulo-color.verde-oliva {
+    background-color: var(--verde-claro);
+    border: 2px solid #96ac60;
+}
+
+.circulo-color.verde-oliva-oscuro {
+    background-color: var(--verde-oliva);
+    border: 2px solid #778c43;
+}
+
+/* Una sutil línea diagonal para indicar "evitar" */
+.circulo-color::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    width: 120%;
+    height: 1.5px;
+    /* Usamos un gris oscuro suave para la línea, para no confundir con el verde de la boda */
+    background-color: rgba(74, 74, 74, 0.4); 
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+.etiqueta-color {
+    font-size: 0.8rem;
+    color: var(--verde-claro);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* --- SECCIÓN REGALOS --- */
+.regalos {
+    padding: 60px 20px 80px;
+    background-color: var(--fondo-app);
+    text-align: center;
+}
+
+.intro-regalos {
+    font-size: 0.95rem;
+    color: var(--texto-oscuro);
+    margin-bottom: 35px;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Contenedor Flex para poner una al lado de la otra */
+.regalos-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px; /* Espacio entre tarjetas */
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.tarjeta-regalo {
+    background-color: var(--blanco);
+    border: 1px solid rgba(163, 177, 138, 0.3);
+    border-radius: 15px;
+    padding: 25px 15px;
+    flex: 1; /* Hace que ambas midan exactamente lo mismo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.icono-regalo {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.subtitulo-regalo {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--verde-oliva);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tarjeta-regalo p {
+    font-size: 0.8rem;
+    color: var(--texto-oscuro);
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+/* Botón pequeño para la mesa de regalos */
+.btn-regalo {
+    margin-top: auto; /* Lo empuja siempre al final de la tarjeta */
+    padding: 10px 18px;
+    background-color: var(--verde-oliva);
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+
+.btn-regalo:active {
+    background-color: var(--verde-claro);
+}
+
+.nota-sobres {
+    margin-top: auto;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--verde-claro);
+}
+
+/* --- SECCIÓN GALERÍA / CARRUSEL --- */
+.galeria {
+    padding: 60px 20px 80px; /* Un poco más de espacio abajo para respirar */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    /* === MAGIA DEL FONDO === */
+    /* Capa 1: Filtro blanco al 85% para no perder la lectura del texto */
+    /* Capa 2: Tu imagen de fondo local */
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.575), rgba(255, 255, 255, 0.671)), 
+        url('assets/11.jpg'); /* <-- Asegúrate de poner el nombre de tu foto aquí */
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.header-flor-externa,
+.galeria .titulo-seccion,
+.texto-galeria,
+.carousel-container {
+    position: relative;
+    z-index: 1;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden; /* Oculta las fotos que no están activas */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* La pista que contiene todas las fotos en fila */
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Animación suave al pasar la foto */
+    width: 100%;
+}
+
+.carousel-slide {
+    min-width: 100%; /* Cada foto ocupa el 100% de la caja visible */
+    height: 450px; /* Alto fijo de la galería (puedes ajustarlo) */
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Llena el espacio sin aplastar la imagen */
+    display: block;
+}
+
+/* --- BOTONES DEL CARRUSEL --- */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    color: var(--verde-oliva);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Efecto cristal */
+    backdrop-filter: blur(4px); 
+}
+
+.carousel-btn:active {
+    background-color: var(--blanco);
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+/* --- INDICADORES (PUNTITOS) --- */
+.carousel-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.dot.activo {
+    background-color: var(--blanco);
+    transform: scale(1.3);
+}
+
+.texto-galeria {
+    font-size: 0.95rem;
+    color: var(--texto-oscuro);
+    line-height: 1.7;
+    max-width: 340px; /* Mantiene el texto en un bloque estrecho y elegante */
+    margin: 0 auto 30px; /* Centrado y con margen inferior antes de las fotos */
+    text-align: center;
+    font-weight: 400;
 }
