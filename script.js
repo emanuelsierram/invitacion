@@ -6,12 +6,12 @@ if (history.scrollRestoration) {
 window.scrollTo(0, 0);
 
 document.addEventListener("DOMContentLoaded", () => {
-    
-   const pantallaSobre = document.getElementById('pantalla-sobre');
+
+    const pantallaSobre = document.getElementById('pantalla-sobre');
     const videoSobre = document.getElementById('video-sobre');
     const capaInstruccion = document.getElementById('capa-instruccion');
     const elementosAnimados = document.querySelectorAll('.animar-fade-up');
-    
+
     let videoYaReproducido = false;
     let transicionIniciada = false;
 
@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. Monitorear tiempo del video
     videoSobre.addEventListener('timeupdate', () => {
-        const segundosAntesDelFinal = 2.0; 
+        const segundosAntesDelFinal = 2.0;
         const tiempoDeFlash = videoSobre.duration - segundosAntesDelFinal;
 
         if (videoSobre.currentTime >= tiempoDeFlash && !transicionIniciada) {
-            transicionIniciada = true; 
-            
+            transicionIniciada = true;
+
             // Disparamos el flash dorado
             pantallaSobre.classList.add('flash-activo');
 
             // --- AQUÍ ESTÁN LOS CAMBIOS CLAVE ---
-            
+
             // A. Desbloqueamos el scroll justo cuando empieza el flash
             document.body.classList.remove('bloquear-scroll');
 
@@ -54,20 +54,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- LÓGICA DEL BOTÓN AÑADIR AL CALENDARIO ---
     const btnCalendario = document.getElementById('btn-calendario');
-    
+
     if (btnCalendario) {
         btnCalendario.addEventListener('click', () => {
             // URL generada con la fecha (16 Agosto 2026) y hora (3:00 PM hora Colombia)
             const titulo = encodeURIComponent('Boda de Emanuel & Richelle');
             const detalles = encodeURIComponent('¡Nos llena de alegría contar con tu presencia en este día tan especial!');
             const ubicacion = encodeURIComponent('Cartagena, Colombia');
-            
+
             // Fechas en formato UTC (YYYYMMDDTHHMMSSZ). 3:00 PM Colombia (UTC-5) es 8:00 PM UTC (20:00:00).
-            const fechaInicio = '20260816T200000Z'; 
+            const fechaInicio = '20260816T200000Z';
             const fechaFin = '20260816T230000Z'; // Asumimos 3 horas de evento para el calendario
-            
+
             const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=${fechaInicio}/${fechaFin}&details=${detalles}&location=${ubicacion}`;
-            
+
             // Abre Google Calendar en una nueva pestaña
             window.open(googleCalendarUrl, '_blank');
         });
@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (entrada.isIntersecting) {
                 // Hacemos visible el elemento
                 entrada.target.classList.add('visible');
-    
-                
+
+
                 // Dejamos de observar este elemento para que la animación solo ocurra una vez
                 observador.unobserve(entrada.target);
             }
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cubiertaFecha.addEventListener('click', () => {
             // 1. Plegamos la tapa hacia atrás
             cubiertaFecha.classList.add('destapado');
-            
+
             // 2. Esperamos a que la tapa casi desaparezca para girar el número 16
             setTimeout(() => {
                 numeroCalendario.classList.add('flip-animacion');
@@ -116,7 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- 1. LÓGICA DEL NOMBRE PERSONALIZADO ---
     const params = new URLSearchParams(window.location.search);
     const nombreInvitado = params.get('invitado');
-    
+    const cuposInvitado = params.get('c') || "1"; // 'c' será el parámetro para cupos, por defecto 1
+
     // Buscamos el elemento que acabamos de crear en el HTML
     const elementoNombreFinal = document.getElementById('nombre-invitado-final');
 
@@ -127,16 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- LÓGICA DEL CRONÓMETRO DE DÍAS FALTANTES ---
-    
+
     // Configuramos la fecha exacta: 16 de Agosto de 2026 a las 15:00:00 (3:00 PM)
     const fechaBoda = new Date("Aug 16, 2026 15:00:00").getTime();
 
     // Función que se ejecuta cada 1 segundo (1000ms)
     const intervaloCronometro = setInterval(() => {
-        
+
         // Obtenemos la fecha y hora de este mismo instante
         const ahora = new Date().getTime();
-        
+
         // Encontramos la distancia entre ahora y la fecha de la boda
         const distancia = fechaBoda - ahora;
 
@@ -148,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Ubicamos los elementos en el HTML
         const elDias = document.getElementById("dias");
-        
+
         // Si el elemento existe, inyectamos los números.
         // El operador (dias < 10 ? "0" + dias : dias) es para que los números del 0 al 9 tengan un "0" delante (ej: 09, 08)
         if (elDias) {
@@ -169,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 1000);
 
-// --- LÓGICA DEL CARRUSEL DE FOTOS (Bucle Infinito y 10s) ---
+    // --- LÓGICA DEL CARRUSEL DE FOTOS (Bucle Infinito y 10s) ---
     const track = document.getElementById('carousel-track');
     const btnPrev = document.getElementById('btn-prev');
     const btnNext = document.getElementById('btn-next');
@@ -189,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Como añadimos una foto al principio, nuestro índice real empieza en 1
         let indexReal = 1;
-        
+
         // Ajustamos la pista para que muestre la foto original 1 sin animación al cargar
         track.style.transition = "none";
         track.style.transform = `translateX(-100%)`;
@@ -200,18 +201,18 @@ document.addEventListener("DOMContentLoaded", () => {
         function actualizarPuntitos() {
             let indexDot = indexReal - 1;
             // Corregir los índices si estamos parados sobre los clones invisibles
-            if (indexReal === totalOriginal + 1) indexDot = 0; 
-            if (indexReal === 0) indexDot = totalOriginal - 1; 
+            if (indexReal === totalOriginal + 1) indexDot = 0;
+            if (indexReal === 0) indexDot = totalOriginal - 1;
 
             dots.forEach(dot => dot.classList.remove('activo'));
-            if(dots[indexDot]) dots[indexDot].classList.add('activo');
+            if (dots[indexDot]) dots[indexDot].classList.add('activo');
         }
 
         // Función principal para mover el carrusel
         function moverA(index) {
             if (enTransicion) return; // Evita que se vuelva loco si el usuario hace muchos clics rápidos
             enTransicion = true;
-            
+
             track.style.transition = "transform 0.6s ease-in-out"; // Animación suave
             track.style.transform = `translateX(-${index * 100}%)`;
             indexReal = index;
@@ -221,14 +222,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // 3. El truco de magia: El "salto invisible" cuando termina la animación
         track.addEventListener('transitionend', () => {
             enTransicion = false;
-            
+
             // Si pasamos la última foto y llegamos al clon de la primera...
             if (indexReal === totalOriginal + 1) {
                 track.style.transition = "none"; // Apagamos la animación
                 indexReal = 1; // Saltamos mágicamente a la foto 1 real
                 track.style.transform = `translateX(-${indexReal * 100}%)`;
             }
-            
+
             // Si retrocedemos desde la primera y llegamos al clon de la última...
             if (indexReal === 0) {
                 track.style.transition = "none";
@@ -265,6 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnAbrir.addEventListener('click', () => {
         // Usamos la variable nombreInvitado que ya extrajiste de la URL al inicio del script
         displayNombre.textContent = nombreInvitado || "Invitado Especial";
+        document.getElementById('num-cupos-modal').textContent = cuposInvitado;
         modal.style.display = 'flex';
     });
 
@@ -277,28 +279,34 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAceptar.textContent = "Enviando...";
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzBplLIzmPyDjzdsIXFrl1VhGwYgQ2zXaTBDv2uak-ciC6SUCpAdcK3ryrNif2DTJc/exec'; // <--- LEER ABAJO
-        
+
         const datos = new FormData();
         datos.append('nombre', nombreInvitado || "Invitado Especial");
+        datos.append('cupos', cuposInvitado); // <--- ENVIAMOS LOS CUPOS
         datos.append('fecha', new Date().toLocaleString());
 
- fetch(scriptURL, { 
-            method: 'POST', 
+        fetch(scriptURL, {
+            method: 'POST',
             mode: 'no-cors', // <--- ESTA ES LA MAGIA
-            body: datos 
+            body: datos
         })
-        .then(() => {
-            // Con no-cors no podemos leer la respuesta de Google, pero sabemos que llegó
-            alert('¡Asistencia confirmada! Gracias por acompañarnos.');
-            modal.style.display = 'none';
-            btnAceptar.textContent = "Confirmado ✓";
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert('Hubo un error, pero no te preocupes, inténtalo de nuevo.');
-            btnAceptar.disabled = false;
-            btnAceptar.textContent = "Sí, Confirmar";
-        });
+            .then(() => {
+                // Con no-cors no podemos leer la respuesta de Google, pero sabemos que llegó
+                alert('¡Asistencia confirmada! Gracias por acompañarnos.');
+                modal.style.display = 'none';
+                btnAceptar.textContent = "Confirmado ✓";
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('Hubo un error, pero no te preocupes, inténtalo de nuevo.');
+                btnAceptar.disabled = false;
+                btnAceptar.textContent = "Sí, Confirmar";
+            });
     });
+
+    const displayCuposTarjeta = document.getElementById('cupos-tarjeta');
+    if (displayCuposTarjeta) {
+        displayCuposTarjeta.textContent = cuposInvitado;
+    }
 
 });
