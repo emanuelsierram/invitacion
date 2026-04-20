@@ -695,7 +695,7 @@ body.bloquear-scroll {
 
 /* --- SECCIÓN REGALOS --- */
 .regalos {
-    padding: 60px 20px 80px;
+    padding: 60px 20px 60px;
     background-color: var(--fondo-app);
     text-align: center;
 }
@@ -896,4 +896,147 @@ body.bloquear-scroll {
     margin: 0 auto 30px; /* Centrado y con margen inferior antes de las fotos */
     text-align: center;
     font-weight: 400;
+}
+
+.secuencia-1 { transition-delay: 0.2s !important; }
+.secuencia-2 { transition-delay: 0.5s !important; }
+.secuencia-3 { transition-delay: 0.8s !important; }
+
+/* --- SECCIÓN CONFIRMACIÓN (ACTUALIZADA) --- */
+.confirmacion-section {
+    padding: 20px 30px 40px;
+    background-color: var(--fondo-app);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.confirmacion-card {
+    width: 100%;
+    max-width: 360px; /* Ancho ajustado para que se vea como en la imagen */
+    padding: 20px 30px 40px; /* 20px arriba, 30px a los lados, 40px abajo */    
+    border: 1px solid var(--verde-claro); /* El borde verde sutil */
+    border-radius: 20px;
+    background-color: var(--blanco); /* Fondo completamente blanco */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03); /* Una sombra muy suave */
+}
+
+.confirmacion-card .icono-rsvp {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    opacity: 0.8; /* Un poco más suave para que no compita con el título */
+}
+
+/* El título cursivo y grande */
+.confirmacion-card .titulo-seccion {
+    font-family: 'Great Vibes', cursive;
+    color: var(--verde-oliva);
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1.1; /* Hace que "Confirmar" y "Asistencia" se abracen bien */
+    margin-bottom: 25px;
+    margin-top: 0;
+}
+
+.confirmacion-card .texto-confirmar {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: var(--texto-oscuro);
+    line-height: 1.4;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* El botón principal con sombra de color */
+#btn-abrir-confirmar {
+    background-color: var(--verde-oliva);
+    color: var(--blanco);
+    border: none;
+    padding: 15px 10px;
+    border-radius: 30px; /* Bordes de pastilla */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 90%; /* Ocupa casi todo el ancho de la tarjeta */
+    /* Sombra verdosa como en la imagen */
+    box-shadow: 0 8px 20px rgba(122, 139, 74, 0.4); 
+    transition: all 0.3s ease;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;}
+
+#btn-abrir-confirmar:active {
+    transform: scale(0.96); /* Efecto de que se hunde al tocarlo */
+    box-shadow: 0 4px 10px rgba(122, 139, 74, 0.4);
+}
+
+/* --- ESTILOS DE LA MODAL --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: none; /* Oculta por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-contenido {
+    background-color: var(--blanco);
+    padding: 35px 25px;
+    border-radius: 20px;
+    width: 85%;
+    max-width: 350px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: aparecerModal 0.3s ease-out;
+}
+
+@keyframes aparecerModal {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-nombre-invitado {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--verde-oliva);
+    margin: 15px 0;
+}
+
+.modal-botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    justify-content: center;
+}
+
+.btn-secundario {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+}
+
+/* --- ESTILO DE CUPOS EN LA TARJETA --- */
+.info-cupos {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--texto-oscuro);
+    margin-bottom: 25px; /* Espacio antes del botón */
+    font-style: italic;
+}
+
+.resaltado-cupos {
+    color: var(--verde-oliva);
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-style: normal;
 }

@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }, {
-        threshold: 0.1 // Se dispara cuando al menos el 10% del elemento es visible
+        threshold: 0.15 // Se dispara cuando al menos el 10% del elemento es visible
     });
 
     // Le decimos al observador que vigile todos los elementos con la clase .animar-scroll
@@ -253,5 +253,52 @@ document.addEventListener("DOMContentLoaded", () => {
             moverA(indexReal + 1);
         }, 10000); // <-- Aquí están los 10 segundos
     }
+
+    // --- LÓGICA DE CONFIRMACIÓN AUTOMÁTICA ---
+    const modal = document.getElementById('modal-confirmar');
+    const btnAbrir = document.getElementById('btn-abrir-confirmar');
+    const btnCancelar = document.getElementById('btn-cancelar');
+    const btnAceptar = document.getElementById('btn-aceptar-confirmacion');
+    const displayNombre = document.getElementById('nombre-confirmacion-modal');
+
+    // 1. Abrir Modal
+    btnAbrir.addEventListener('click', () => {
+        // Usamos la variable nombreInvitado que ya extrajiste de la URL al inicio del script
+        displayNombre.textContent = nombreInvitado || "Invitado Especial";
+        modal.style.display = 'flex';
+    });
+
+    // 2. Cerrar Modal
+    btnCancelar.addEventListener('click', () => modal.style.display = 'none');
+
+    // 3. ENVIAR A GOOGLE SHEETS
+    btnAceptar.addEventListener('click', () => {
+        btnAceptar.disabled = true;
+        btnAceptar.textContent = "Enviando...";
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzBplLIzmPyDjzdsIXFrl1VhGwYgQ2zXaTBDv2uak-ciC6SUCpAdcK3ryrNif2DTJc/exec'; // <--- LEER ABAJO
+        
+        const datos = new FormData();
+        datos.append('nombre', nombreInvitado || "Invitado Especial");
+        datos.append('fecha', new Date().toLocaleString());
+
+ fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', // <--- ESTA ES LA MAGIA
+            body: datos 
+        })
+        .then(() => {
+            // Con no-cors no podemos leer la respuesta de Google, pero sabemos que llegó
+            alert('¡Asistencia confirmada! Gracias por acompañarnos.');
+            modal.style.display = 'none';
+            btnAceptar.textContent = "Confirmado ✓";
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('Hubo un error, pero no te preocupes, inténtalo de nuevo.');
+            btnAceptar.disabled = false;
+            btnAceptar.textContent = "Sí, Confirmar";
+        });
+    });
 
 });
