@@ -317,23 +317,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         fetch(scriptURL, {
             method: 'POST',
-            mode: 'no-cors', // <--- ESTA ES LA MAGIA
             body: datos
         })
-            .then(() => {
-                // 1. Cerramos la modal
-                modal.style.display = 'none';
+            .then(response => response.text()) // <-- AQUÍ LEEMOS LA RESPUESTA
+            .then(textoRespuesta => {
 
-                // 2. Ocultamos la sección de confirmación
-                const seccionConfirmar = document.getElementById('confirmacion');
-                seccionConfirmar.style.display = 'none';
+                // Si Google dice que todo es válido ("Success")
+                if (textoRespuesta.trim() === "Success") {
+                    modal.style.display = 'none';
+                    document.getElementById('confirmacion').style.display = 'none';
 
-                // 3. Mostramos la sección de agradecimiento
-                const seccionGracias = document.getElementById('agradecimiento');
-                seccionGracias.style.display = 'flex'; // Usamos flex para mantener el centrado
+                    const seccionGracias = document.getElementById('agradecimiento');
+                    seccionGracias.style.display = 'flex';
+                    seccionGracias.scrollIntoView({ behavior: 'smooth' });
 
-                // 4. (Opcional) Hacemos un scroll suave hacia el mensaje de gracias
-                seccionGracias.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // Si la validación falla, muestra tu mensaje de error en una alerta
+                    alert(textoRespuesta);
+                    btnAceptar.disabled = false;
+                    btnAceptar.textContent = "Sí, Confirmar";
+                }
             })
             .catch(error => {
                 console.error('Error!', error.message);
