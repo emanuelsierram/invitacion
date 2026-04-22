@@ -904,7 +904,7 @@ body.bloquear-scroll {
 
 /* --- SECCIÓN CONFIRMACIÓN (ACTUALIZADA) --- */
 .confirmacion-section {
-    padding: 20px 30px 40px;
+    padding: 40px 30px 40px;
     background-color: var(--fondo-app);
     text-align: center;
     display: flex;
@@ -1106,4 +1106,32 @@ body.bloquear-scroll {
 
 .music-control-container.playing .music-icon.playing {
     display: block;
+}
+
+
+.contenedor-btn-galeria {
+    margin-top: 40px; /* Da un buen respiro después de las fotos */
+    text-align: center;
+}
+
+.btn-recorrido {
+    display: inline-block; /* Necesario para que el enlace tome forma de botón */
+    background-color: transparent;
+    color: var(--verde-oliva);
+    border: 2px solid var(--verde-oliva);
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none; /* Quita la línea de abajo típica de los links */
+    transition: all 0.3s ease;
+}
+
+/* Efecto al tocarlo o pasar el mouse */
+.btn-recorrido:active, 
+.btn-recorrido:hover {
+    background-color: var(--verde-oliva);
+    color: var(--blanco);
+    transform: scale(0.96);
 }

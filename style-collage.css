@@ -1,0 +1,28 @@
+:root {
+    --verde-oliva: #778c43; /* Hexágono actualizado del verde oscuro de la imagen */
+    --verde-claro: #96ac60; /* Hexágono del verde claro de la imagen (mismo hex) */
+    --color-crema: #F2EBE1; /* Hexágono del crema suave de la imagen (NUEVO) */
+    --blanco: #FFFFFF;
+    --texto-oscuro: #4A4A4A;
+    --fondo-app: #FAFAFA;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  width: 80%;
+}
+
+/* --- SECCIÓN BOTÓN REGRESAR (RECORRIDO) --- */
+.contenedor-regresar {
+    text-align: center;
+    padding: 40px 20px 80px; /* Da un buen espacio al final de la página */
+    width: 100%;
+}
+
+.btn-regresar {
+    display: inline-block; /* Necesario para que un enlace <a> se comporte como botón */
+    text-decoration: none; /* Quita el subrayado del texto */
+    padding: 15px 40px; /* Lo hace un poco más ancho para que se vea elegante */
+}

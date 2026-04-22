@@ -7,7 +7,7 @@ window.scrollTo(0, 0);
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    
+
 
     const pantallaSobre = document.getElementById('pantalla-sobre');
     const videoSobre = document.getElementById('video-sobre');
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    
+
 
     let videoYaReproducido = false;
     let transicionIniciada = false;
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // A. Desbloqueamos el scroll
             document.body.classList.remove('bloquear-scroll');
-            
+
             // B. Le avisamos a la app que ya empezó (Muestra el botón de música)
             document.body.classList.add('app-activa');
 
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 elementosAnimados.forEach(elemento => {
                     elemento.classList.add('visible');
                 });
-            }, 1600); 
+            }, 1600);
         }
     });
 
@@ -321,14 +321,23 @@ document.addEventListener("DOMContentLoaded", () => {
             body: datos
         })
             .then(() => {
-                // Con no-cors no podemos leer la respuesta de Google, pero sabemos que llegó
-                alert('¡Asistencia confirmada! Gracias por acompañarnos.');
+                // 1. Cerramos la modal
                 modal.style.display = 'none';
-                btnAceptar.textContent = "Confirmado ✓";
+
+                // 2. Ocultamos la sección de confirmación
+                const seccionConfirmar = document.getElementById('confirmacion');
+                seccionConfirmar.style.display = 'none';
+
+                // 3. Mostramos la sección de agradecimiento
+                const seccionGracias = document.getElementById('agradecimiento');
+                seccionGracias.style.display = 'flex'; // Usamos flex para mantener el centrado
+
+                // 4. (Opcional) Hacemos un scroll suave hacia el mensaje de gracias
+                seccionGracias.scrollIntoView({ behavior: 'smooth' });
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                alert('Hubo un error, pero no te preocupes, inténtalo de nuevo.');
+                alert('Hubo un error al enviar. Por favor, intenta de nuevo.');
                 btnAceptar.disabled = false;
                 btnAceptar.textContent = "Sí, Confirmar";
             });
