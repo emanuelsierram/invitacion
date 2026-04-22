@@ -7,10 +7,32 @@ window.scrollTo(0, 0);
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    
+
     const pantallaSobre = document.getElementById('pantalla-sobre');
     const videoSobre = document.getElementById('video-sobre');
     const capaInstruccion = document.getElementById('capa-instruccion');
     const elementosAnimados = document.querySelectorAll('.animar-fade-up');
+    const bgMusic = document.getElementById('bg-music'); // <-- NUEVO
+    const musicControl = document.getElementById('music-control'); // <-- NUEVO
+
+
+
+    // --- LÓGICA MANUAL DEL BOTÓN DE MÚSICA ---
+    if (musicControl && bgMusic) {
+        musicControl.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicControl.classList.remove('paused');
+                musicControl.classList.add('playing');
+            } else {
+                bgMusic.pause();
+                musicControl.classList.remove('playing');
+                musicControl.classList.add('paused');
+            }
+        });
+    }
+    
 
     let videoYaReproducido = false;
     let transicionIniciada = false;
@@ -36,19 +58,27 @@ document.addEventListener("DOMContentLoaded", () => {
             // Disparamos el flash dorado
             pantallaSobre.classList.add('flash-activo');
 
-            // --- AQUÍ ESTÁN LOS CAMBIOS CLAVE ---
-
-            // A. Desbloqueamos el scroll justo cuando empieza el flash
+            // A. Desbloqueamos el scroll
             document.body.classList.remove('bloquear-scroll');
+            
+            // B. Le avisamos a la app que ya empezó (Muestra el botón de música)
+            document.body.classList.add('app-activa');
 
-            // B. Retrasamos la aparición de los nombres.
-            // Si el flash dura 1.8s, esperamos 1.6s o 1.8s para que 
-            // los nombres suban cuando la pantalla ya está clara.
+            // C. ENCENDEMOS LA MÚSICA AQUÍ
+            if (bgMusic) {
+                bgMusic.play().catch(error => console.log("Música bloqueada:", error));
+                if (musicControl) {
+                    musicControl.classList.remove('paused');
+                    musicControl.classList.add('playing');
+                }
+            }
+
+            // D. Retrasamos la aparición de los nombres.
             setTimeout(() => {
                 elementosAnimados.forEach(elemento => {
                     elemento.classList.add('visible');
                 });
-            }, 1600); // <-- Ajustado para esperar casi todo el flash
+            }, 1600); 
         }
     });
 

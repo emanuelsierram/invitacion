@@ -112,7 +112,7 @@ body.bloquear-scroll {
 .hero {
     /* Mantenemos un alto que permita ver bien la foto (puedes subirlo a 85vh o 90vh si sientes que falta espacio) */
     min-height: 20vh; 
-    height: 50vh; 
+    height: 60vh; 
     
     /* 1. ZONA BLANCA MÁS GRANDE: 
        El blanco puro (1) ahora empieza al 65% de la pantalla, dando mucho más espacio al texto */
@@ -1039,4 +1039,71 @@ body.bloquear-scroll {
     font-weight: 700;
     font-size: 1.1rem;
     font-style: normal;
+}
+
+/* ========================================= */
+/* --- ESTILOS DEL CONTROL DE MÚSICA --- */
+/* ========================================= */
+
+.music-control-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* Esquina inferior izquierda para no molestar otros botones */
+    z-index: 5000; /* Asegura que flote sobre todo */
+    transition: all 0.3s ease;
+    display: none; /* Se mantiene oculto durante el sobre y video inicial */
+}
+
+/* Solo se muestra cuando la invitación está visible */
+.app-activa .music-control-container {
+    display: block;
+    animation: aparecerBtnMusica 0.5s ease-out 1s forwards; /* Entrada suave con retraso */
+    opacity: 0;
+}
+
+@keyframes aparecerBtnMusica {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* --- ESTILOS DEL BOTÓN REPRODUCTOR --- */
+.btn-music {
+    background-color: var(--verde-oliva); /* Fondo color primario */
+    color: var(--blanco); /* Ícono en blanco */
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Botón perfectamente circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(122, 139, 74, 0.4); /* Sombra elegante verde */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-music:active {
+    transform: scale(0.92);
+    box-shadow: 0 2px 8px rgba(122, 139, 74, 0.3);
+}
+
+/* --- ESTILOS DE LOS ÍCONOS SVG --- */
+.music-icon {
+    display: none;
+    width: 26px; /* Tamaño del ícono */
+    height: 26px;
+}
+
+/* Pequeño ajuste óptico para que el triángulo de Play se vea perfectamente centrado */
+.music-icon.paused {
+    margin-left: 4px; 
+}
+
+/* Lógica de visualización */
+.music-control-container.paused .music-icon.paused {
+    display: block;
+}
+
+.music-control-container.playing .music-icon.playing {
+    display: block;
 }
