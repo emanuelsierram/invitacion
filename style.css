@@ -149,8 +149,8 @@ body.bloquear-scroll {
     /* 1. ZONA BLANCA MÁS GRANDE: 
        El blanco puro (1) ahora empieza al 65% de la pantalla, dando mucho más espacio al texto */
     background-image: 
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.75) 45%, rgba(255, 255, 255, 1) 65%), 
-        url('assets/1.1.jpg'); 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0) 65%), 
+        url('assets/dra/1.1.png'); 
     
     background-size: cover; 
     
@@ -220,8 +220,8 @@ body.bloquear-scroll {
 /* Flores Superiores */
 .decoracion-arriba-izq {
     top: -10px; /* Un poco salidas hacia arriba */
-    left: -20px; /* Un poco salidas hacia la izquierda */
-    width: 45%; /* Ocupan casi la mitad del ancho en móvil */
+    left: 0px; /* Un poco salidas hacia la izquierda */
+    width: 100%; /* Ocupan casi la mitad del ancho en móvil */
 }
 
 .decoracion-arriba-der {
@@ -757,11 +757,9 @@ body.bloquear-scroll {
     border: 1px solid rgba(163, 177, 138, 0.3);
     border-radius: 15px;
     padding: 25px 15px;
-    flex: 1; /* Hace que ambas midan exactamente lo mismo */
-    display: flex;
-    flex-direction: column;
     align-items: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    width: 350px;
 }
 
 .icono-regalo {
