@@ -88,13 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnCalendario) {
         btnCalendario.addEventListener('click', () => {
             // URL generada con la fecha (16 Agosto 2026) y hora (3:00 PM hora Colombia)
-            const titulo = encodeURIComponent('Boda de Dely & Lily');
+            const titulo = encodeURIComponent('Boda de Lly & Deli');
             const detalles = encodeURIComponent('¡Nos llena de alegría contar con tu presencia en este día tan especial!');
             const ubicacion = encodeURIComponent('Cartagena, Colombia');
 
             // Fechas en formato UTC (YYYYMMDDTHHMMSSZ). 3:00 PM Colombia (UTC-5) es 8:00 PM UTC (20:00:00).
-            const fechaInicio = '20260627T200000Z';
-            const fechaFin = '20260627T230000Z'; // Asumimos 3 horas de evento para el calendario
+            const fechaInicio = '20260627T220000Z';
+            const fechaFin = '20260627T233000Z'; // Asumimos 3 horas de evento para el calendario
 
             const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=${fechaInicio}/${fechaFin}&details=${detalles}&location=${ubicacion}`;
 

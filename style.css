@@ -635,7 +635,7 @@ body.bloquear-scroll {
     /* Capa 2: Tu asset local de textura de lino 'assets/textura-lino.jpg' */
     background-image: 
         linear-gradient(rgba(255, 255, 255, 0.466), rgba(255, 255, 255, 0.603)), 
-        url('assets/6.png'); /* <-- Cambia esta URL por TU ASSET LOCAL */
+        url('https://image.slidesdocs.com/responsive-images/docs/watercolor-of-green-florals-page-border-background-word-template_c35688950d__1131_1600.jpg'); /* <-- Cambia esta URL por TU ASSET LOCAL */
     
     background-size: cover; /* Cubre toda la sección */
     background-position: center; /* Centra la textura */
@@ -821,7 +821,7 @@ body.bloquear-scroll {
     /* Capa 2: Tu imagen de fondo local */
     background-image: 
         linear-gradient(rgba(255, 255, 255, 0.575), rgba(255, 255, 255, 0.671)), 
-        url('assets/11.jpg'); /* <-- Asegúrate de poner el nombre de tu foto aquí */
+        url('assets/dra/1.jpg'); /* <-- Asegúrate de poner el nombre de tu foto aquí */
     
     background-size: cover;
     background-position: center;
@@ -1191,8 +1191,8 @@ body.bloquear-scroll {
 
 /* --- ESTILO DE LOS ÍCONOS ELEGANTES (SVG) --- */
 .icono-elegante {
-    width: 45px; /* Tamaño del ícono */
-    height: 45px;
+    width: 60px; /* Tamaño del ícono */
+    height: 60px;
     color: var(--verde-oliva); /* Toma el color principal de la boda */
     margin-bottom: 15px;
     opacity: 0.9;
