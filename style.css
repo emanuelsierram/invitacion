@@ -565,6 +565,7 @@ body.bloquear-scroll {
 .icono-ubicacion {
     font-size: 2.5rem;
     margin-bottom: 15px;
+    align-items: center;
 }
 
 .titulo-ubicacion {
@@ -1188,4 +1189,47 @@ body.bloquear-scroll {
         /* Se mantiene invisible hasta reiniciar el ciclo */
         box-shadow: 0 0 0 0 rgba(122, 139, 74, 0); 
     }
+}
+
+/* --- ESTILO DE LOS ÍCONOS ELEGANTES (SVG) --- */
+.icono-elegante {
+    width: 45px; /* Tamaño del ícono */
+    height: 45px;
+    color: var(--verde-oliva); /* Toma el color principal de la boda */
+    margin-bottom: 15px;
+    opacity: 0.9;
+    /* Le damos un efecto muy sutil de sombra para separarlo del fondo */
+    filter: drop-shadow(0 2px 4px rgba(122, 139, 74, 0.2)); 
+}
+
+/* --- ESTILO PARA EL ÍCONO DE "TOCA PARA VER" EN SAVE THE DATE --- */
+.icono-tocar-svg {
+    width: 50px;
+    height: 50px;
+    color: var(--color-crema); /* O el color que mejor resalte en tu calendario */
+    margin-bottom: 8px;
+    /* Le agregamos una animación suave para que llame la atención */
+    animation: flotarTap 2s infinite ease-in-out;
+}
+
+@keyframes flotarTap {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* --- ESTILO PARA EL ÍCONO DENTRO DEL BOTÓN DEL CALENDARIO --- */
+.icono-btn-calendario {
+    width: 35px;
+    height: 35px;
+    margin-right: 8px; /* Separación entre el ícono y el texto */
+    vertical-align: middle; /* Lo alinea perfecto con las letras */
+    position: relative;
+    top: -1px; /* Ajuste óptico milimétrico */
+}
+
+/* Si tu botón no era flex, esto asegura que todo se centre bonito */
+#btn-calendario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
