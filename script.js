@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 4. Automatización de 10 segundos (10000 milisegundos)
         setInterval(() => {
             moverA(indexReal + 1);
-        }, 10000); // <-- Aquí están los 10 segundos
+        }, 1500); // <-- Aquí están los 10 segundos
     }
 
     // --- LÓGICA DE CONFIRMACIÓN AUTOMÁTICA ---
