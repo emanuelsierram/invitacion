@@ -1069,7 +1069,7 @@ body.bloquear-scroll {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.9rem;
     color: var(--texto-oscuro);
-    margin-bottom: 25px; /* Espacio antes del botón */
+    margin-bottom: 10px; /* Espacio antes del botón */
     font-style: italic;
 }
 
@@ -1244,8 +1244,8 @@ body.bloquear-scroll {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
     color: var(--texto-oscuro, #333); /* Mantiene legibilidad */
-    margin-top: 12px;
-    margin-bottom: 10px;
+    margin-top: 1px;
+    margin-bottom: 25px;
     text-align: center;
 }
 
