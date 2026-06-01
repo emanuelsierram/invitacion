@@ -6,6 +6,7 @@
     --blanco: #FFFFFF;
     --texto-oscuro: #4A4A4A;
     --fondo-app: #FAFAFA;
+    --lila: #cea2fd;
 }
 
 * {
@@ -705,6 +706,11 @@ body.bloquear-scroll {
     border: 2px solid #778c43;
 }
 
+.circulo-color.lila {
+    background-color: var(--lila);
+    border: 2px solid #cea2fd;
+}
+
 /* Una sutil línea diagonal para indicar "evitar" */
 .circulo-color::after {
     content: '';
@@ -1233,3 +1239,13 @@ body.bloquear-scroll {
     align-items: center;
     justify-content: center;
 }
+
+.info-mesa {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: var(--texto-oscuro, #333); /* Mantiene legibilidad */
+    margin-top: 12px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+

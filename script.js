@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const nombreInvitado = params.get('invitado');
     const cuposInvitado = params.get('c') || "1"; // 'c' será el parámetro para cupos, por defecto 1
+    const mesaInvitado = params.get('m') || "No asignada"; // <--- NUEVO: Extraemos la mesa
 
     // Buscamos el elemento que acabamos de crear en el HTML
     const elementoNombreFinal = document.getElementById('nombre-invitado-final');
@@ -297,6 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Usamos la variable nombreInvitado que ya extrajiste de la URL al inicio del script
         displayNombre.textContent = nombreInvitado || "Invitado Especial";
         document.getElementById('num-cupos-modal').textContent = cuposInvitado;
+        document.getElementById('mesa-modal').textContent = mesaInvitado || "Por definir";
         modal.style.display = 'flex';
     });
 
@@ -313,6 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const datos = new FormData();
         datos.append('nombre', nombreInvitado || "Invitado Especial");
         datos.append('cupos', cuposInvitado); // <--- ENVIAMOS LOS CUPOS
+        datos.append('mesa', mesaInvitado); // <--- NUEVO: Enviamos la mesa a Google
         datos.append('fecha', new Date().toLocaleString());
 
         fetch(scriptURL, {
@@ -349,6 +352,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const displayCuposTarjeta = document.getElementById('cupos-tarjeta');
     if (displayCuposTarjeta) {
         displayCuposTarjeta.textContent = cuposInvitado;
+    }
+
+    const displayMesaTarjeta = document.getElementById('mesa-tarjeta');
+    if (displayMesaTarjeta) {
+        // Si no hay mesa en la URL, mostrará "Por definir" o lo que elijas
+        displayMesaTarjeta.textContent = mesaInvitado || "Por definir"; 
     }
 
 });
