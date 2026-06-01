@@ -1249,3 +1249,56 @@ body.bloquear-scroll {
     text-align: center;
 }
 
+/* ========================================= */
+/* --- RECIBO DE CONFIRMACIÓN Y COPIAR --- */
+/* ========================================= */
+
+.resumen-confirmacion {
+    background-color: rgba(122, 139, 74, 0.05); /* Fondo verde oliva casi invisible */
+    border: 1px dashed rgba(122, 139, 74, 0.5); /* Borde punteado elegante */
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--texto-oscuro, #333);
+    margin-top: -20px;
+    width: 100%;
+}
+
+.resumen-confirmacion p {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+/* Estilo del botón pequeño */
+.btn-copiar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: var(--verde-oliva);
+    border: 1px solid var(--verde-oliva);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-copiar:hover, 
+.btn-copiar.copiado {
+    background-color: var(--verde-oliva);
+    color: var(--blanco);
+}
+
+.icono-copiar {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+

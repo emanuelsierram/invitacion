@@ -330,6 +330,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     modal.style.display = 'none';
                     document.getElementById('confirmacion').style.display = 'none';
 
+                    document.getElementById('gracias-nombre').textContent = nombreInvitado || "Invitado Especial";
+                    document.getElementById('gracias-cupos').textContent = cuposInvitado;
+                    document.getElementById('gracias-mesa').textContent = mesaInvitado || "Por definir";
+
                     const seccionGracias = document.getElementById('agradecimiento');
                     seccionGracias.style.display = 'flex';
                     seccionGracias.scrollIntoView({ behavior: 'smooth' });
@@ -358,6 +362,32 @@ document.addEventListener("DOMContentLoaded", () => {
     if (displayMesaTarjeta) {
         // Si no hay mesa en la URL, mostrará "Por definir" o lo que elijas
         displayMesaTarjeta.textContent = mesaInvitado || "Por definir"; 
+    }
+
+    // --- LÓGICA DEL BOTÓN COPIAR DATOS ---
+    const btnCopiar = document.getElementById('btn-copiar');
+    if (btnCopiar) {
+        btnCopiar.addEventListener('click', () => {
+            // Preparamos el texto bonito para WhatsApp o Notas
+            const textoACopiar = `💍 Boda de Emanuel & Richelle\n\n✅ Asistencia Confirmada\n👤 Invitado: ${nombreInvitado || "Invitado Especial"}\n🎟️ Cupos: ${cuposInvitado}\n🍽️ Mesa asignada: ${mesaInvitado || "Por definir"}\n\n¡Nos vemos pronto!`;
+            
+            // Usamos la API del navegador para copiar al portapapeles
+            navigator.clipboard.writeText(textoACopiar).then(() => {
+                const textoOriginal = btnCopiar.innerHTML;
+                // Damos retroalimentación visual al usuario
+                btnCopiar.innerHTML = "¡Copiado! ✓";
+                btnCopiar.classList.add('copiado');
+                
+                // Regresamos el botón a la normalidad después de 3 segundos
+                setTimeout(() => {
+                    btnCopiar.innerHTML = textoOriginal;
+                    btnCopiar.classList.remove('copiado');
+                }, 3000);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                alert("Hubo un error al copiar los datos.");
+            });
+        });
     }
 
 });
