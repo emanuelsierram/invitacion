@@ -1193,8 +1193,8 @@ body.bloquear-scroll {
 
 /* --- ESTILO DE LOS ÍCONOS ELEGANTES (SVG) --- */
 .icono-elegante {
-    width: 45px; /* Tamaño del ícono */
-    height: 45px;
+    width: 55px; /* Tamaño del ícono */
+    height: 55px;
     color: var(--verde-oliva); /* Toma el color principal de la boda */
     margin-bottom: 15px;
     opacity: 0.9;
