@@ -195,6 +195,7 @@
                     <div class="circulo-color blanco" title="Blanco"></div>
                     <div class="circulo-color verde-oliva" title="Oliva"></div>
                     <div class="circulo-color verde-oliva-oscuro" title="Oliva oscuro"></div>
+                    <div class="circulo-color lila" title="Lila"></div>
                     <span class="etiqueta-color">Colores reservados para la boda</span>
                 </div>
             </div>
@@ -319,6 +320,9 @@
                     <p class="info-cupos">
                         Hemos reservado <span id="cupos-tarjeta" class="resaltado-cupos"></span> cupos para ti.
                     </p>
+                    <p class="info-mesa" style="margin-top: 10px;">
+                    Mesa asignada: <strong id="mesa-tarjeta" style="color: var(--verde-oliva);"></strong>
+                        </p>
 
                     <button id="btn-abrir-confirmar" class="btn-primario">Confirmar Asistencia</button>
                 </div>
@@ -326,25 +330,35 @@
 
             </section>
 
-            <section class="confirmacion-section" id="agradecimiento" style="display: none;">
-                    <div class="confirmacion-card">
-                    <div class="icono-rsvp">
-                        <svg class="icono-elegante" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 3v18"></path>
-                            <path d="M3 12h18"></path>
-                            <path d="M18.364 5.636l-12.728 12.728"></path>
-                            <path d="M5.636 5.636l12.728 12.728"></path>
-                            <path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4z"></path>
-                        </svg>
-                    </div>
-                    <h2 class="titulo-seccion">¡Muchas Gracias!</h2>
-                    <p class="texto-confirmar">
-                        Tu asistencia ha sido confirmada con éxito. Nos hace muy felices saber que estarás con nosotros
-                        celebrando nuestro amor.
-                    </p>
-                </div>
-            </section>
+        <section class="confirmacion-section" id="agradecimiento" style="display: none;">
+            <div class="confirmacion-card">
+                <svg class="icono-elegante" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v18"></path>
+                    <path d="M3 12h18"></path>
+                    <path d="M18.364 5.636l-12.728 12.728"></path>
+                    <path d="M5.636 5.636l12.728 12.728"></path>
+                    <path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4z"></path>
+                </svg>
+                <h2 class="titulo-seccion">¡Muchas Gracias!</h2>
+                <p class="texto-confirmar">
+                    Tu asistencia ha sido confirmada con éxito. Nos hace muy felices saber que estarás con nosotros
+                    celebrando nuestro amor.
+                </p>
 
+                <div class="resumen-confirmacion">
+                    <p><strong>Invitado:</strong> <span id="gracias-nombre"></span></p>
+                    <p><strong>Cupos:</strong> <span id="gracias-cupos"></span></p>
+                    <p><strong>Mesas asignadas:</strong> <span id="gracias-mesa"></span></p>
+                    
+                    <button id="btn-copiar" class="btn-copiar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icono-copiar">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copiar mis datos
+                    </button>
+                </div>
+           </div>
         </section>
 
         <div id="modal-confirmar" class="modal-overlay">
@@ -353,6 +367,7 @@
                 <p class="modal-mensaje">Estás a punto de confirmar la asistencia de:</p>
                 <p id="nombre-confirmacion-modal" class="modal-nombre-invitado"></p>
                 <p class="modal-cupos">Cupos reservados: <span id="num-cupos-modal" style="font-weight: bold;"></span>
+                <p class="modal-mesa" style="margin-bottom: 15px;">Mesas asignadas: <span id="mesa-modal" style="font-weight: bold; color: var(--verde-oliva);"></span></p>
                 </p>
                 <p class="modal-pregunta">¿Deseas confirmar ahora?</p>
 
