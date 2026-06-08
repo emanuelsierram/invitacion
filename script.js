@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Fechas en formato UTC (YYYYMMDDTHHMMSSZ). 3:00 PM Colombia (UTC-5) es 8:00 PM UTC (20:00:00).
             const fechaInicio = '20260816T200000Z';
-            const fechaFin = '20260816T230000Z'; // Asumimos 3 horas de evento para el calendario
+            const fechaFin = '20260817T040000Z'; // Asumimos 3 horas de evento para el calendario
 
             const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=${fechaInicio}/${fechaFin}&details=${detalles}&location=${ubicacion}`;
 
@@ -243,6 +243,106 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Arrancamos la búsqueda de datos inmediatamente
     cargarDatosInvitado();
+
+    // =========================================================
+    // --- LÓGICA DEL CRONÓMETRO DE DÍAS FALTANTES ---
+    // =========================================================
+
+    // Configuramos la fecha exacta: 16 de Agosto de 2026 a las 15:00:00 (3:00 PM)
+    const fechaBoda = new Date("Aug 16, 2026 15:00:00").getTime();
+
+    const intervaloCronometro = setInterval(() => {
+        const ahora = new Date().getTime();
+        const distancia = fechaBoda - ahora;
+
+        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+        const elDias = document.getElementById("dias");
+
+        if (elDias) {
+            elDias.textContent = dias; 
+            document.getElementById("horas").textContent = horas < 10 ? "0" + horas : horas;
+            document.getElementById("minutos").textContent = minutos < 10 ? "0" + minutos : minutos;
+            document.getElementById("segundos").textContent = segundos < 10 ? "0" + segundos : segundos;
+        }
+
+        if (distancia < 0) {
+            clearInterval(intervaloCronometro); 
+            const contenedorCrono = document.querySelector(".cronometro-container");
+            if (contenedorCrono) {
+                contenedorCrono.innerHTML = "<div style='font-size: 1.2rem; color: var(--verde-oliva); font-weight: 600;'>¡El gran día ha llegado! 🎉</div>";
+            }
+        }
+    }, 1000);
+
+    // =========================================================
+    // --- LÓGICA DEL CARRUSEL DE FOTOS (Bucle Infinito y 10s) ---
+    // =========================================================
+    const track = document.getElementById('carousel-track');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const dots = document.querySelectorAll('.dot');
+    const slidesOriginales = document.querySelectorAll('.carousel-slide');
+
+    if (track && btnPrev && btnNext && slidesOriginales.length > 0) {
+        const totalOriginal = dots.length;
+
+        const primerSlideClon = slidesOriginales[0].cloneNode(true);
+        const ultimoSlideClon = slidesOriginales[totalOriginal - 1].cloneNode(true);
+
+        track.insertBefore(ultimoSlideClon, slidesOriginales[0]);
+        track.appendChild(primerSlideClon);
+
+        let indexReal = 1;
+        track.style.transition = "none";
+        track.style.transform = `translateX(-100%)`;
+        let enTransicion = false;
+
+        function actualizarPuntitos() {
+            let indexDot = indexReal - 1;
+            if (indexReal === totalOriginal + 1) indexDot = 0;
+            if (indexReal === 0) indexDot = totalOriginal - 1;
+
+            dots.forEach(dot => dot.classList.remove('activo'));
+            if (dots[indexDot]) dots[indexDot].classList.add('activo');
+        }
+
+        function moverA(index) {
+            if (enTransicion) return; 
+            enTransicion = true;
+
+            track.style.transition = "transform 0.6s ease-in-out"; 
+            track.style.transform = `translateX(-${index * 100}%)`;
+            indexReal = index;
+            actualizarPuntitos();
+        }
+
+        track.addEventListener('transitionend', () => {
+            enTransicion = false;
+            if (indexReal === totalOriginal + 1) {
+                track.style.transition = "none"; 
+                indexReal = 1; 
+                track.style.transform = `translateX(-${indexReal * 100}%)`;
+            }
+            if (indexReal === 0) {
+                track.style.transition = "none";
+                indexReal = totalOriginal; 
+                track.style.transform = `translateX(-${indexReal * 100}%)`;
+            }
+        });
+
+        btnNext.addEventListener('click', () => { moverA(indexReal + 1); });
+        btnPrev.addEventListener('click', () => { moverA(indexReal - 1); });
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => { moverA(i + 1); });
+        });
+
+        setInterval(() => { moverA(indexReal + 1); }, 10000); 
+    }
 
 
 // --- B. LÓGICA DE ABRIR MODAL (Y VALIDAR SELECCIÓN MÍNIMA) ---

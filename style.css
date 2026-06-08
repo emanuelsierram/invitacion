@@ -943,7 +943,7 @@ body.bloquear-scroll {
 
 /* --- SECCIÓN CONFIRMACIÓN (ACTUALIZADA) --- */
 .confirmacion-section {
-    padding: 40px 30px 40px;
+    padding: 40px 10px !important;
     background-color: var(--fondo-app);
     text-align: center;
     display: flex;
