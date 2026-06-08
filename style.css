@@ -1302,3 +1302,63 @@ body.bloquear-scroll {
     margin-right: 8px;
 }
 
+
+/* ========================================= */
+/* --- ESTILOS DEL CHECKLIST DE INVITADOS --- */
+/* ========================================= */
+
+.checklist-invitados {
+    background-color: rgba(122, 139, 74, 0.05); /* Fondo muy sutil */
+    border: 1px solid rgba(122, 139, 74, 0.2);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.instruccion-check {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--texto-oscuro);
+    margin-bottom: 15px;
+    border-bottom: 1px dashed rgba(122, 139, 74, 0.3);
+    padding-bottom: 8px;
+}
+
+/* Diseño de cada fila del checklist */
+.checkbox-item {
+    margin-bottom: 12px;
+}
+
+.checkbox-item:last-child {
+    margin-bottom: 0;
+}
+
+.checkbox-item label {
+    display: flex;
+    align-items: center; /* Centra el cuadrito con el texto */
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+/* Estilo nativo tintado para el checkbox */
+.check-integrante {
+    appearance: auto;
+    accent-color: var(--verde-oliva); /* Pinta el cuadrito del color de la boda */
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.nombre-check {
+    font-weight: 500;
+    color: var(--texto-oscuro);
+}
+
+.mesa-check {
+    font-size: 0.85rem;
+    color: var(--verde-oliva);
+    font-style: italic;
+    margin-left: 6px;
+}

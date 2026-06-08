@@ -144,241 +144,239 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- 1. LÓGICA DEL NOMBRE PERSONALIZADO ---
+
+    // =========================================================
+    // --- LÓGICA DEL NOMBRE PERSONALIZADO Y CONEXIÓN A GOOGLE ---
+    // =========================================================
+
+    // ¡PEGA AQUÍ TU NUEVA URL DE GOOGLE APPS SCRIPT!
+    const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbxSn-tni_frpbS62kXY0Sw_L7678lUj-LltJ1XqwpP01O4DpnSjvtHoMMrKyRj9U8C6/exec"; 
+
     const params = new URLSearchParams(window.location.search);
-    const nombreInvitado = params.get('invitado');
-    const cuposInvitado = params.get('c') || "1"; // 'c' será el parámetro para cupos, por defecto 1
-    const mesaInvitado = params.get('m') || "No asignada"; // <--- NUEVO: Extraemos la mesa
+    const nombreInvitado = params.get('invitado') || "Invitado Especial";
 
-    // Buscamos el elemento que acabamos de crear en el HTML
+    // Variables globales para el control del Checklist
+    let esUnSoloCupo = false;
+    let integrantesData = [];
+    let integrantesFinalesString = "";
+    let cuposFinalesConfirmados = 0;
+
     const elementoNombreFinal = document.getElementById('nombre-invitado-final');
-
-    // Si encontramos el elemento y hay un nombre en la URL, lo inyectamos
-    if (elementoNombreFinal && nombreInvitado) {
-        // Usamos decodeURIComponent por si el nombre tiene espacios o tildes
+    if (elementoNombreFinal && nombreInvitado !== "Invitado Especial") {
         elementoNombreFinal.textContent = decodeURIComponent(nombreInvitado);
     }
 
-    // --- LÓGICA DEL CRONÓMETRO DE DÍAS FALTANTES ---
-
-    // Configuramos la fecha exacta: 16 de Agosto de 2026 a las 15:00:00 (3:00 PM)
-    const fechaBoda = new Date("Aug 16, 2026 15:00:00").getTime();
-
-    // Función que se ejecuta cada 1 segundo (1000ms)
-    const intervaloCronometro = setInterval(() => {
-
-        // Obtenemos la fecha y hora de este mismo instante
-        const ahora = new Date().getTime();
-
-        // Encontramos la distancia entre ahora y la fecha de la boda
-        const distancia = fechaBoda - ahora;
-
-        // Cálculos matemáticos para extraer días, horas, minutos y segundos
-        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-        // Ubicamos los elementos en el HTML
-        const elDias = document.getElementById("dias");
-
-        // Si el elemento existe, inyectamos los números.
-        // El operador (dias < 10 ? "0" + dias : dias) es para que los números del 0 al 9 tengan un "0" delante (ej: 09, 08)
-        if (elDias) {
-            elDias.textContent = dias; // Los días pueden ser más de 99, así que no le ponemos cero inicial
-            document.getElementById("horas").textContent = horas < 10 ? "0" + horas : horas;
-            document.getElementById("minutos").textContent = minutos < 10 ? "0" + minutos : minutos;
-            document.getElementById("segundos").textContent = segundos < 10 ? "0" + segundos : segundos;
-        }
-
-        // ¿Qué pasa si el cronómetro llega a cero? 
-        if (distancia < 0) {
-            clearInterval(intervaloCronometro); // Detenemos el reloj
-            const contenedorCrono = document.querySelector(".cronometro-container");
-            if (contenedorCrono) {
-                // Cambiamos los círculos por un mensaje de celebración
-                contenedorCrono.innerHTML = "<div style='font-size: 1.2rem; color: var(--verde-oliva); font-weight: 600;'>¡El gran día ha llegado! 🎉</div>";
-            }
-        }
-    }, 1000);
-
-    // --- LÓGICA DEL CARRUSEL DE FOTOS (Bucle Infinito y 10s) ---
-    const track = document.getElementById('carousel-track');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
-    const dots = document.querySelectorAll('.dot');
-    const slidesOriginales = document.querySelectorAll('.carousel-slide');
-
-    if (track && btnPrev && btnNext && slidesOriginales.length > 0) {
-        const totalOriginal = dots.length;
-
-        // 1. Clonar la primera y última foto para crear la ilusión del bucle infinito
-        const primerSlideClon = slidesOriginales[0].cloneNode(true);
-        const ultimoSlideClon = slidesOriginales[totalOriginal - 1].cloneNode(true);
-
-        // 2. Añadimos el clon del último al principio, y el clon del primero al final
-        track.insertBefore(ultimoSlideClon, slidesOriginales[0]);
-        track.appendChild(primerSlideClon);
-
-        // Como añadimos una foto al principio, nuestro índice real empieza en 1
-        let indexReal = 1;
-
-        // Ajustamos la pista para que muestre la foto original 1 sin animación al cargar
-        track.style.transition = "none";
-        track.style.transform = `translateX(-100%)`;
-
-        let enTransicion = false;
-
-        // Función para iluminar el puntito correcto
-        function actualizarPuntitos() {
-            let indexDot = indexReal - 1;
-            // Corregir los índices si estamos parados sobre los clones invisibles
-            if (indexReal === totalOriginal + 1) indexDot = 0;
-            if (indexReal === 0) indexDot = totalOriginal - 1;
-
-            dots.forEach(dot => dot.classList.remove('activo'));
-            if (dots[indexDot]) dots[indexDot].classList.add('activo');
-        }
-
-        // Función principal para mover el carrusel
-        function moverA(index) {
-            if (enTransicion) return; // Evita que se vuelva loco si el usuario hace muchos clics rápidos
-            enTransicion = true;
-
-            track.style.transition = "transform 0.6s ease-in-out"; // Animación suave
-            track.style.transform = `translateX(-${index * 100}%)`;
-            indexReal = index;
-            actualizarPuntitos();
-        }
-
-        // 3. El truco de magia: El "salto invisible" cuando termina la animación
-        track.addEventListener('transitionend', () => {
-            enTransicion = false;
-
-            // Si pasamos la última foto y llegamos al clon de la primera...
-            if (indexReal === totalOriginal + 1) {
-                track.style.transition = "none"; // Apagamos la animación
-                indexReal = 1; // Saltamos mágicamente a la foto 1 real
-                track.style.transform = `translateX(-${indexReal * 100}%)`;
-            }
-
-            // Si retrocedemos desde la primera y llegamos al clon de la última...
-            if (indexReal === 0) {
-                track.style.transition = "none";
-                indexReal = totalOriginal; // Saltamos a la última foto real
-                track.style.transform = `translateX(-${indexReal * 100}%)`;
-            }
-        });
-
-        // Eventos de los botones
-        btnNext.addEventListener('click', () => { moverA(indexReal + 1); });
-        btnPrev.addEventListener('click', () => { moverA(indexReal - 1); });
-
-        // Eventos para que los puntitos también sean clickeables
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                moverA(i + 1);
-            });
-        });
-
-        // 4. Automatización de 10 segundos (10000 milisegundos)
-        setInterval(() => {
-            moverA(indexReal + 1);
-        }, 10000); // <-- Aquí están los 10 segundos
-    }
-
-    // --- LÓGICA DE CONFIRMACIÓN AUTOMÁTICA ---
+    // Modal y Botones de Confirmación
     const modal = document.getElementById('modal-confirmar');
     const btnAbrir = document.getElementById('btn-abrir-confirmar');
     const btnCancelar = document.getElementById('btn-cancelar');
     const btnAceptar = document.getElementById('btn-aceptar-confirmacion');
     const displayNombre = document.getElementById('nombre-confirmacion-modal');
 
-    // 1. Abrir Modal
+    // --- A. FUNCIÓN PARA BUSCAR DATOS AL CARGAR LA PÁGINA ---
+    async function cargarDatosInvitado() {
+        if (nombreInvitado === "Invitado Especial") return;
+
+        try {
+            const response = await fetch(`${URL_GOOGLE_SCRIPT}?accion=obtenerFamilia&nombre=${encodeURIComponent(nombreInvitado)}`);
+            const data = await response.json();
+
+            if (data.encontrado) {
+                // Quitamos el mensaje de cargando y habilitamos el botón
+                document.getElementById('mensaje-cargando-datos').style.display = 'none';
+                btnAbrir.disabled = false;
+                btnAbrir.style.opacity = '1';
+
+                const cuposTotales = parseInt(data.cupos);
+                const stringIntegrantes = data.integrantes || "";
+                
+                // Convertimos el texto del Excel separado por comas en un Array
+                integrantesData = stringIntegrantes.split(',').map(i => i.trim()).filter(i => i !== "");
+
+                // CRITERIO 4: Si es 1 solo cupo, ocultamos checklist
+                if (cuposTotales <= 1) {
+                    esUnSoloCupo = true;
+                    document.getElementById('cupos-tarjeta').textContent = "1";
+                } 
+                // CRITERIO 2: Si son varios, pintamos el checklist
+                else {
+                    esUnSoloCupo = false;
+                    document.getElementById('cupos-tarjeta').textContent = cuposTotales;
+                    
+                    const contenedorLista = document.getElementById('lista-integrantes');
+                    contenedorLista.innerHTML = ''; // Limpiamos por precaución
+
+                    integrantesData.forEach(integrante => {
+                        // CRITERIO 5: Separamos el nombre de la mesa mediante el guion "-"
+                        let nombre = integrante;
+                        let mesa = "";
+                        if (integrante.includes('-')) {
+                            const partes = integrante.split('-');
+                            nombre = partes[0].trim();
+                            mesa = partes[1].trim();
+                        }
+
+                        // Creamos el HTML de cada checkbox
+                        const div = document.createElement('div');
+                        div.className = 'checkbox-item';
+                        div.innerHTML = `
+                            <label>
+                                <input type="checkbox" class="check-integrante" value="${integrante}">
+                                <span class="nombre-check">${nombre}</span>
+                                ${mesa ? `<span class="mesa-check">${mesa}</span>` : ''}
+                            </label>
+                        `;
+                        contenedorLista.appendChild(div);
+                    });
+
+                    // Mostramos el recuadro del checklist
+                    document.getElementById('contenedor-checklist').style.display = 'block';
+                }
+            } else {
+                document.getElementById('mensaje-cargando-datos').textContent = "No encontramos tu invitación en la lista.";
+            }
+        } catch (error) {
+            console.error(error);
+            document.getElementById('mensaje-cargando-datos').textContent = "Hubo un error cargando tus datos de invitado.";
+        }
+    }
+
+    // Arrancamos la búsqueda de datos inmediatamente
+    cargarDatosInvitado();
+
+
+// --- B. LÓGICA DE ABRIR MODAL (Y VALIDAR SELECCIÓN MÍNIMA) ---
     btnAbrir.addEventListener('click', () => {
-        // Usamos la variable nombreInvitado que ya extrajiste de la URL al inicio del script
-        displayNombre.textContent = nombreInvitado || "Invitado Especial";
-        document.getElementById('num-cupos-modal').textContent = cuposInvitado;
-        document.getElementById('mesa-modal').textContent = mesaInvitado || "Por definir";
+        let mesasAsignadas = []; // <-- NUEVO: Array para capturar las mesas
+
+        // CRITERIO 1: Validación estricta si hay checklist
+        if (!esUnSoloCupo) {
+            const seleccionados = document.querySelectorAll('.check-integrante:checked');
+            if (seleccionados.length === 0) {
+                alert("Debes seleccionar al menos a un invitado para poder confirmar tu asistencia.");
+                return; // Bloquea la apertura de la ventana modal
+            }
+            cuposFinalesConfirmados = seleccionados.length;
+            
+            // Guardamos los strings exactos ("Nombre - Mesa X") de los seleccionados
+            const arrSeleccionados = Array.from(seleccionados).map(cb => cb.value);
+            integrantesFinalesString = arrSeleccionados.join(", ");
+
+            // <-- NUEVO: Extraemos las mesas de los que sí van a ir
+            arrSeleccionados.forEach(item => {
+                if (item.includes('-')) {
+                    const mesa = item.split('-')[1].trim();
+                    // Solo la añadimos si no está repetida
+                    if (!mesasAsignadas.includes(mesa)) {
+                        mesasAsignadas.push(mesa);
+                    }
+                }
+            });
+
+        } else {
+            // Si es un invitado solitario
+            cuposFinalesConfirmados = 1;
+            integrantesFinalesString = integrantesData[0] || nombreInvitado;
+
+            // <-- NUEVO: Extraemos su mesa
+            if (integrantesFinalesString.includes('-')) {
+                const mesa = integrantesFinalesString.split('-')[1].trim();
+                mesasAsignadas.push(mesa);
+            }
+        }
+
+        // Llenamos los datos visuales en la ventanita modal antes de abrirla
+        displayNombre.textContent = nombreInvitado;
+        document.getElementById('num-cupos-modal').textContent = cuposFinalesConfirmados;
+        
+        // <-- NUEVO: Inyectamos las mesas en el Modal
+        const displayMesaModal = document.getElementById('mesa-modal');
+        if (displayMesaModal) {
+            // Si hay mesas guardadas, las une con coma (ej. "Mesa 1, Mesa 11"). Si no, dice "Por definir".
+            displayMesaModal.textContent = mesasAsignadas.length > 0 ? mesasAsignadas.join(', ') : "Por definir";
+        }
+
         modal.style.display = 'flex';
     });
 
-    // 2. Cerrar Modal
-    btnCancelar.addEventListener('click', () => modal.style.display = 'none');
+    btnCancelar.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
 
-    // 3. ENVIAR A GOOGLE SHEETS
+
+    // --- C. LÓGICA DE ENVIAR A GOOGLE (CRITERIO 3) ---
     btnAceptar.addEventListener('click', () => {
         btnAceptar.disabled = true;
-        btnAceptar.textContent = "Enviando...";
-
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzBplLIzmPyDjzdsIXFrl1VhGwYgQ2zXaTBDv2uak-ciC6SUCpAdcK3ryrNif2DTJc/exec'; // <--- LEER ABAJO
+        btnAceptar.textContent = "Confirmando...";
 
         const datos = new FormData();
-        datos.append('nombre', nombreInvitado || "Invitado Especial");
-        datos.append('cupos', cuposInvitado); // <--- ENVIAMOS LOS CUPOS
-        datos.append('mesa', mesaInvitado); // <--- NUEVO: Enviamos la mesa a Google
+        datos.append('nombre', nombreInvitado);
+        datos.append('cupos', cuposFinalesConfirmados);
+        datos.append('integrantes', integrantesFinalesString); // Enviamos los nombres de los que van
         datos.append('fecha', new Date().toLocaleString());
 
-        fetch(scriptURL, {
+        fetch(URL_GOOGLE_SCRIPT, {
             method: 'POST',
             body: datos
         })
-            .then(response => response.text()) // <-- AQUÍ LEEMOS LA RESPUESTA
-            .then(textoRespuesta => {
+        .then(response => response.text())
+        .then(textoRespuesta => {
+            if (textoRespuesta.trim() === "Success") {
+                modal.style.display = 'none';
+                document.getElementById('confirmacion').style.display = 'none';
 
-                // Si Google dice que todo es válido ("Success")
-                if (textoRespuesta.trim() === "Success") {
-                    modal.style.display = 'none';
-                    document.getElementById('confirmacion').style.display = 'none';
+                // Llenamos el recibo visual de "Muchas Gracias"
+                document.getElementById('gracias-nombre').textContent = nombreInvitado;
+                document.getElementById('gracias-cupos').textContent = cuposFinalesConfirmados;
+                
+                const listaUl = document.getElementById('gracias-lista-integrantes');
+                listaUl.innerHTML = ""; // Limpiamos residuos
+                
+                // Pintamos la lista de los que confirmaron en el HTML
+                const arrFinales = integrantesFinalesString.split(',');
+                arrFinales.forEach(item => {
+                    const li = document.createElement('li');
+                    li.style.marginBottom = "5px";
+                    li.textContent = item.trim(); 
+                    listaUl.appendChild(li);
+                });
 
-                    document.getElementById('gracias-nombre').textContent = nombreInvitado || "Invitado Especial";
-                    document.getElementById('gracias-cupos').textContent = cuposInvitado;
-                    document.getElementById('gracias-mesa').textContent = mesaInvitado || "Por definir";
+                // Hacemos visible la tarjeta final
+                const seccionGracias = document.getElementById('agradecimiento');
+                seccionGracias.style.display = 'flex';
+                seccionGracias.scrollIntoView({ behavior: 'smooth' });
 
-                    const seccionGracias = document.getElementById('agradecimiento');
-                    seccionGracias.style.display = 'flex';
-                    seccionGracias.scrollIntoView({ behavior: 'smooth' });
-
-                } else {
-                    // Si la validación falla, muestra tu mensaje de error en una alerta
-                    alert(textoRespuesta);
-                    btnAceptar.disabled = false;
-                    btnAceptar.textContent = "Sí, Confirmar";
-                }
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert('Hubo un error al enviar. Por favor, intenta de nuevo.');
+            } else {
+                alert("Hubo un problema al procesar tu confirmación. Intenta de nuevo.");
                 btnAceptar.disabled = false;
                 btnAceptar.textContent = "Sí, Confirmar";
-            });
+            }
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('Error de conexión. Revisa tu internet e intenta de nuevo.');
+            btnAceptar.disabled = false;
+            btnAceptar.textContent = "Sí, Confirmar";
+        });
     });
 
-    const displayCuposTarjeta = document.getElementById('cupos-tarjeta');
-    if (displayCuposTarjeta) {
-        displayCuposTarjeta.textContent = cuposInvitado;
-    }
 
-    const displayMesaTarjeta = document.getElementById('mesa-tarjeta');
-    if (displayMesaTarjeta) {
-        // Si no hay mesa en la URL, mostrará "Por definir" o lo que elijas
-        displayMesaTarjeta.textContent = mesaInvitado || "Por definir"; 
-    }
-
-    // --- LÓGICA DEL BOTÓN COPIAR DATOS ---
+    // --- D. LÓGICA DEL BOTÓN COPIAR DATOS PARA WHATSAPP ---
     const btnCopiar = document.getElementById('btn-copiar');
     if (btnCopiar) {
         btnCopiar.addEventListener('click', () => {
-            // Preparamos el texto bonito para WhatsApp o Notas
-            const textoACopiar = `💍 Boda de Emanuel & Richelle\n\n✅ Asistencia Confirmada\n👤 Invitado: ${nombreInvitado || "Invitado Especial"}\n🎟️ Cupos: ${cuposInvitado}\n🍽️ Mesa asignada: ${mesaInvitado || "Por definir"}\n\n¡Nos vemos pronto!`;
+            // Construimos la lista con viñetas para el portapapeles
+            const listaParaWhatsapp = integrantesFinalesString.split(',').map(i => `  - ${i.trim()}`).join('\n');
             
-            // Usamos la API del navegador para copiar al portapapeles
+            const textoACopiar = `💍 Boda de Emanuel & Richelle\n\n✅ Asistencia Confirmada\n👤 Grupo: ${nombreInvitado}\n🎟️ Cupos confirmados: ${cuposFinalesConfirmados}\n\n👥 Asistirán:\n${listaParaWhatsapp}\n\n¡Nos vemos pronto!`;
+            
             navigator.clipboard.writeText(textoACopiar).then(() => {
                 const textoOriginal = btnCopiar.innerHTML;
-                // Damos retroalimentación visual al usuario
+                
+                // Cambiamos el estilo del botón temporalmente
                 btnCopiar.innerHTML = "¡Copiado! ✓";
                 btnCopiar.classList.add('copiado');
                 
-                // Regresamos el botón a la normalidad después de 3 segundos
                 setTimeout(() => {
                     btnCopiar.innerHTML = textoOriginal;
                     btnCopiar.classList.remove('copiado');
@@ -390,4 +388,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-});
+}); // <-- FIN DEL DOMContentLoaded

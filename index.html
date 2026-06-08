@@ -316,12 +316,18 @@
                     <p class="texto-confirmar">
                         Sería un honor para nosotros contar con tu presencia en este día tan especial.
                     </p>
-                    <p class="info-cupos">
-                        Hemos reservado <span id="cupos-tarjeta" class="resaltado-cupos"></span> cupos para ti.
-                    </p>
-                    <p class="info-mesa" style="margin-top: 10px;">
-                    Mesas asignadas: <strong id="mesa-tarjeta" style="color: var(--verde-oliva);"></strong>
-                        </p>
+                   <p class="info-cupos">
+                    Hemos reservado <span id="cupos-tarjeta" class="resaltado-cupos">0</span> cupos para ti.
+                </p>
+                <p id="mensaje-cargando-datos" style="font-size: 0.85rem; color: var(--verde-oliva); text-align: center; margin-bottom: 10px;">
+                    Cargando lista de invitados...
+                </p>
+
+                <!-- NUEVO: Contenedor donde el JS inyectará los checkboxes -->
+                <div id="contenedor-checklist" class="checklist-invitados" style="display: none;">
+                    <p class="instruccion-check">Por favor, selecciona quiénes asistirán:</p>
+                    <div id="lista-integrantes"></div>
+                </div>
 
                     <button id="btn-abrir-confirmar" class="btn-primario">Confirmar Asistencia</button>
                 </div>
@@ -344,10 +350,17 @@
                     celebrando nuestro amor.
                 </p>
 
+            <!-- RECIBO RESUMEN ACTUALIZADO -->
                 <div class="resumen-confirmacion">
                     <p><strong>Invitado:</strong> <span id="gracias-nombre"></span></p>
-                    <p><strong>Cupos:</strong> <span id="gracias-cupos"></span></p>
-                    <p><strong>Mesas asignadas:</strong> <span id="gracias-mesa"></span></p>
+                    <p><strong>Cupos confirmados:</strong> <span id="gracias-cupos"></span></p>
+                    
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(122, 139, 74, 0.3);">
+                        <p style="margin-bottom: 5px;"><strong>Asistirán:</strong></p>
+                        <!-- Aquí inyectaremos los integrantes en forma de lista visual -->
+                        <ul id="gracias-lista-integrantes" style="margin: 0; padding-left: 20px; font-size: 0.85rem;">
+                        </ul>
+                    </div>
                     
                     <button id="btn-copiar" class="btn-copiar">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icono-copiar">
@@ -362,7 +375,7 @@
 
         <div id="modal-confirmar" class="modal-overlay">
             <div class="modal-contenido">
-                <h3 class="modal-titulo">¡Hola!</h3>
+                <h3 class="modal-titulo">Confirmar reserva</h3>
                 <p class="modal-mensaje">Estás a punto de confirmar la asistencia de:</p>
                 <p id="nombre-confirmacion-modal" class="modal-nombre-invitado"></p>
                 <p class="modal-cupos">Cupos reservados: <span id="num-cupos-modal" style="font-weight: bold; color: var(--verde-oliva);"></span>
