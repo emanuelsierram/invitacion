@@ -127,19 +127,46 @@ document.addEventListener("DOMContentLoaded", () => {
         observador.observe(elemento);
     });
 
-    // --- LÓGICA DE DESCUBRIR LA FECHA (SAVE THE DATE) ---
+// --- LÓGICA DE DESCUBRIR LA FECHA (SAVE THE DATE) ---
     const cubiertaFecha = document.getElementById('cubierta-fecha');
     const numeroCalendario = document.getElementById('flip-numero');
 
     if (cubiertaFecha) {
+        const seccionSaveTheDate = cubiertaFecha.closest('section');
+        
+        // Preparamos la sección añadiendo una clase inicial
+        if (seccionSaveTheDate) {
+            seccionSaveTheDate.classList.add('preparar-fondo-suave');
+        }
+
         cubiertaFecha.addEventListener('click', () => {
             // 1. Plegamos la tapa hacia atrás
             cubiertaFecha.classList.add('destapado');
 
-            // 2. Esperamos a que la tapa casi desaparezca para girar el número 16
+            // 2. Disparamos la aparición del fondo
+            if (seccionSaveTheDate) {
+                seccionSaveTheDate.classList.add('fondo-revelado');
+            }
+
+            // 3. Esperamos a que la tapa se abra para girar el número
             setTimeout(() => {
                 numeroCalendario.classList.add('flip-animacion');
-            }, 300); // 300ms es el tiempo ideal para sincronizar las dos animaciones
+            }, 300); 
+
+            // 4. NUEVO: Difuminamos el calendario entero después de 2.5 segundos
+            // (Le damos 2.5s para que sume el tiempo de animación + el tiempo de lectura)
+          // 4. Difuminamos el calendario y textos, pero transformamos el botón
+            setTimeout(() => {
+                const contenedorCalendario = cubiertaFecha.parentElement; 
+                contenedorCalendario.classList.add('ocultar-suave');
+
+                const textosSeccion = seccionSaveTheDate.querySelectorAll('p');
+                textosSeccion.forEach(texto => {
+                    texto.classList.add('ocultar-suave');
+                });
+
+              
+            }, 2500);
         });
     }
 

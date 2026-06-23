@@ -1362,3 +1362,54 @@ body.bloquear-scroll {
     font-style: italic;
     margin-left: 6px;
 }
+
+/* ========================================= */
+/* --- EFECTOS DE FADE: FECHA Y CALENDARIO --- */
+/* ========================================= */
+
+/* 1. Preparamos la sección para alojar la imagen invisible */
+.preparar-fondo-suave {
+    position: relative;
+    z-index: 1; /* Asegura que el texto y calendario sigan adelante */
+}
+
+/* 2. Creamos la capa con la foto de fondo (Inicia invisible) */
+.preparar-fondo-suave::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    
+    /* ¡IMPORTANTE! Pon aquí el enlace a tu foto */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.452), rgba(255, 255, 255, 0.521)), url('assets/7.jpeg') ; 
+    background-size: cover;
+    background-position: center;
+    
+    opacity: 0; /* Totalmente transparente al inicio */
+    transition: opacity 1.5s ease-in-out !important; /* Difuminado súper suave de 1.5s */
+    z-index: -1; /* Se queda al fondo de todo */
+}
+
+/* 3. Cuando el JS avisa que hubo clic, la capa se vuelve visible */
+.preparar-fondo-suave.fondo-revelado::before {
+    opacity: 1; /* Aparece la foto */
+}
+
+/* OPCIONAL: Si la foto oscurece la sección, pinta los textos de blanco para que resalten */
+.preparar-fondo-suave.fondo-revelado h2, 
+.preparar-fondo-suave.fondo-revelado p {
+    color: #242323 !important;
+    transition: color 1s ease;
+}
+
+/* 4. Transición para desaparecer el calendario suavemente */
+.calendario-oculto {
+    opacity: 0 !important;
+    transition: opacity 1.5s ease-in-out !important; /* Se desvanece en 1.5 segundos */
+    pointer-events: none; /* Evita clics fantasma una vez que se vuelve invisible */
+}
+
+.ocultar-suave {
+    opacity: 0 !important;
+    transition: opacity 1.5s ease-in-out !important; /* Se desvanece en 1.5 segundos */
+    pointer-events: none; /* Evita que el usuario pueda hacer clic en botones invisibles */
+}
